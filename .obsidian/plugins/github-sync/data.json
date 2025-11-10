@@ -1,0 +1,7 @@
+{
+  "remoteURL": "https://github.com/hr1juldey/IndiByte.git",
+  "gitLocation": "/usr/bin/git",
+  "syncinterval": 2,
+  "isSyncOnLoad": true,
+  "checkStatusOnLoad": true
+}

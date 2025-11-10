@@ -1,0 +1,44 @@
+{
+  "editorStatus": {
+    "isTextInserting": false
+  },
+  "providers": [
+    {
+      "tag": "Ollama",
+      "vendor": "Ollama",
+      "options": {
+        "apiKey": "",
+        "baseURL": "http://127.0.0.1:11434",
+        "model": "gpt-oss:20b",
+        "parameters": {}
+      }
+    }
+  ],
+  "systemTags": [
+    "System"
+  ],
+  "newChatTags": [
+    "NewChat"
+  ],
+  "userTags": [
+    "User"
+  ],
+  "roleEmojis": {
+    "assistant": "✨",
+    "system": "🔧",
+    "newChat": "🚀",
+    "user": "💬"
+  },
+  "promptTemplates": [],
+  "enableInternalLink": true,
+  "enableInternalLinkForAssistantMsg": false,
+  "answerDelayInMilliseconds": 2500,
+  "confirmRegenerate": true,
+  "enableTagSuggest": true,
+  "tagSuggestMaxLineLength": 20,
+  "enableExportToJSONL": false,
+  "enableReplaceTag": false,
+  "enableDefaultSystemMsg": true,
+  "defaultSystemMsg": "You  are a helpful  Cowriter agent who will take instructions from the user  and help the user write and organize his articles and thoughts into a well networked and documented vault. \nYou will strictly follow pure pandoc markdown syntax that is compatible with osidian editor and write whatever the user requestes in a detailed way",
+  "enableStreamLog": false
+}
