@@ -6,6 +6,7 @@
       {
         "id": "c7b514de1fd61592",
         "type": "tabs",
+        "dimension": 47.83393501805054,
         "children": [
           {
             "id": "6d941a1ec0594f0e",
@@ -13,12 +14,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Welcome.md",
+                "file": "Project_IndiByte_Structured.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Welcome"
+              "title": "Project_IndiByte_Structured"
             }
           }
         ]
@@ -26,6 +27,7 @@
       {
         "id": "e4c003687928f00f",
         "type": "tabs",
+        "dimension": 52.16606498194946,
         "children": [
           {
             "id": "1a0c45da0e7361b6",
@@ -214,55 +216,23 @@
       "bases:Create new base": false,
       "markdown-importer:Open format converter": false,
       "audio-recorder:Start/stop recording": false,
-      "publish:Publish changes...": false,
-      "github-sync:Sync with Remote": false
+      "publish:Publish changes...": false
     }
-  },
-  "floating": {
-    "id": "4592b47a83b05614",
-    "type": "floating",
-    "children": [
-      {
-        "id": "4b0272a27910efc6",
-        "type": "window",
-        "children": [
-          {
-            "id": "9441c3ec01a25eca",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "7650bd210883ea14",
-                "type": "leaf",
-                "state": {
-                  "type": "webviewer",
-                  "state": {
-                    "url": "https://github.com/kevinmkchin/Obsidian-GitHub-Sync/blob/main/README.md",
-                    "title": "Obsidian-GitHub-Sync/README.md at main · kevinmkchin/Obsidian-GitHub-Sync · GitHub",
-                    "mode": "webview"
-                  },
-                  "icon": "globe-2",
-                  "title": "Obsidian-GitHub-Sync/README.md at main · kevinmkchin/Obsidian-GitHub-Sync · GitHub"
-                }
-              }
-            ]
-          }
-        ],
-        "direction": "vertical",
-        "x": 1284,
-        "y": 36,
-        "width": 1268,
-        "height": 1036,
-        "maximize": false,
-        "zoom": 0
-      }
-    ]
   },
   "active": "6d941a1ec0594f0e",
   "lastOpenFiles": [
-    "Licence.md",
+    "IndiByte_PRD.md",
+    "Project_IndiByte_Structured.md",
+    "FAQ.md",
+    "Community_Guidelines.md",
+    "Technical_Architecture.md",
+    "Contributor_Guidelines.md",
+    "Database_Schema.md",
+    "API_Documentation.md",
     "README.md",
+    "Project_IndiByte.md",
+    "Licence.md",
     "pyproject.toml",
-    "main.py",
-    "Welcome.md"
+    "main.py"
   ]
 }

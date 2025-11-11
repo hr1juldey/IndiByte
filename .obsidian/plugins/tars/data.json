@@ -9,7 +9,7 @@
       "options": {
         "apiKey": "",
         "baseURL": "http://127.0.0.1:11434",
-        "model": "gpt-oss:20b",
+        "model": "qwen3:30b",
         "parameters": {}
       }
     }
