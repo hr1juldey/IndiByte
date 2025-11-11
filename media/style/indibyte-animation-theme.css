@@ -1,0 +1,272 @@
+/* IndiByte Animation Color Theme and Style Guide */
+/* Inspired by traditional Indian art styles (particularly Warli) with Kurzgesagt's animation principles */
+
+:root {
+  /* Primary Color Palette - Traditional Indian Warli Art Inspired */
+  --primary-dark-bg: #f5f5dc; /* Off-white/creamy background, traditional Warli base color */
+  --primary-text: #000000; /* Black text for contrast on traditional background */
+  --primary-accent: #8b4513; /* Earthy brown, traditional Warli color */
+  --secondary-accent: #8b0000; /* Deep red, used in traditional Warli and other Indian art */
+  --tertiary-accent: #006400; /* Deep green, traditional Indian art accent */
+  
+  /* Additional Traditional Indian Art Colors */
+  --warli-ochre: #cc7722; /* Traditional ochre color used in Warli art */
+  --warli-orange: #d2691e; /* Traditional orange-brown used in Warli art */
+  --warli-cream: #fdf5e6; /* Traditional background color for Warli on walls */
+  
+  /* India-Specific Color Elements */
+  --india-saffron: #ff9933; /* Saffron color from Indian flag */
+  --india-white: #ffffff; /* White from Indian flag */
+  --india-green: #138808; /* Green from Indian flag */
+  --india-peacock: #006d6d; /* Peacock blue, representing Indian culture */
+  
+  /* Skin Tones - Representing Indian diversity */
+  --skin-tone-light: #f8d9b7;
+  --skin-tone-medium: #e0a770;
+  --skin-tone-dark: #a7785c;
+  
+  /* Food-Related Colors */
+  --rohu-fish: #e67e22; /* Salmon-like but for Rohu fish */
+  --toor-dal: #f39c12; /* Yellow for Toor Dal */
+  --roti-brown: #8b4513; /* Brown for Indian bread */
+  --vegetable-green: #27ae60; /* Fresh green for vegetables */
+  --spice-red: #e74c3c; /* Red for spices */
+  
+  /* Traditional Indian Art Style Colors */
+  --indian-art-black: #2c2c2c; /* For outlines in traditional Indian art style */
+  --indian-art-white: #f8f8f8; /* For highlights in traditional Indian art */
+  --indian-art-yellow: #f1c40f; /* Bright yellow common in Indian folk art */
+  --indian-art-blue: #3498db; /* Bright blue used in some Indian art forms */
+  
+  /* Data Visualization Colors */
+  --chart-positive: #2ecc71; /* For positive statistics */
+  --chart-negative: #e74c3c; /* For concerning statistics */
+  --chart-neutral: #f1c40f; /* For neutral data */
+  --chart-highlight: #9b59b6; /* For highlighted data */
+  
+  /* Infrastructure/Technology Colors */
+  --tech-blue: #3498db; /* For data connections */
+  --tech-purple: #9b59b6; /* For AI elements */
+  --tech-green: #1abc9c; /* For validation/quality */
+  --tech-orange: #e67e22; /* For community elements */
+  
+  /* Geometric Shape Colors (Warli Style) */
+  --shape-primary: var(--primary-accent);
+  --shape-secondary: var(--secondary-accent);
+  --shape-tertiary: var(--tertiary-accent);
+  --shape-warli: var(--warli-ochre);
+  --shape-india: var(--india-saffron);
+  --shape-warli-outline: var(--indian-art-black);
+  --shape-background: rgba(139, 69, 19, 0.05); /* Subtle Warli-inspired background */
+  
+  /* Gradient Definitions */
+  --gradient-main: linear-gradient(135deg, var(--primary-accent) 0%, var(--warli-ochre) 100%);
+  --gradient-india: linear-gradient(135deg, var(--india-saffron) 0%, var(--india-white) 50%, var(--india-green) 100%);
+  --gradient-warli: linear-gradient(135deg, var(--warli-cream) 0%, var(--primary-accent) 100%);
+  --gradient-tech: linear-gradient(135deg, var(--tech-blue) 0%, var(--tech-purple) 100%);
+  
+  /* Border and Outline Colors */
+  --border-light: var(--indian-art-black);
+  --border-medium: #555555;
+  --border-strong: #000000;
+  --warli-outline: #000000; /* Traditional black outlines in Warli art */
+  
+  /* Shadow Colors */
+  --shadow-soft: rgba(0, 0, 0, 0.15);
+  --shadow-medium: rgba(0, 0, 0, 0.25);
+  --shadow-strong: rgba(0, 0, 0, 0.4);
+}
+
+/* Base styles for animation elements */
+.animation-element {
+  background-color: var(--primary-dark-bg);
+  color: var(--primary-text);
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Kurzgesagt-style geometric shapes */
+.kurzgesagt-shape {
+  fill: var(--shape-primary);
+  stroke: var(--border-medium);
+  stroke-width: 1;
+}
+
+.kurzgesagt-shape-secondary {
+  fill: var(--shape-secondary);
+  stroke: var(--border-medium);
+  stroke-width: 1;
+}
+
+.kurzgesagt-shape-tertiary {
+  fill: var(--shape-tertiary);
+  stroke: var(--border-medium);
+  stroke-width: 1;
+}
+
+.kurzgesagt-shape-india {
+  fill: var(--shape-india);
+  stroke: var(--border-medium);
+  stroke-width: 1;
+}
+
+/* Text styles */
+.animation-title {
+  color: var(--primary-text);
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-shadow: 0 2px 10px var(--shadow-medium);
+}
+
+.animation-subtitle {
+  color: var(--primary-accent);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.animation-body {
+  color: var(--primary-text);
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+/* Data visualization elements */
+.chart-bar-positive {
+  fill: var(--chart-positive);
+}
+
+.chart-bar-negative {
+  fill: var(--chart-negative);
+}
+
+.chart-bar-neutral {
+  fill: var(--chart-neutral);
+}
+
+.chart-highlight {
+  fill: var(--chart-highlight);
+}
+
+/* Food and nutrition elements */
+.food-rohu {
+  fill: var(--rohu-fish);
+}
+
+.food-toor-dal {
+  fill: var(--toor-dal);
+}
+
+.food-roti {
+  fill: var(--roti-brown);
+}
+
+.food-vegetable {
+  fill: var(--vegetable-green);
+}
+
+.food-spice {
+  fill: var(--spice-red);
+}
+
+/* Technology and infrastructure */
+.tech-connection {
+  stroke: var(--tech-blue);
+  stroke-width: 2;
+}
+
+.tech-ai {
+  fill: var(--tech-purple);
+}
+
+.tech-validation {
+  fill: var(--tech-green);
+}
+
+.tech-community {
+  fill: var(--tech-orange);
+}
+
+/* Character and people elements */
+.character-skin-light {
+  fill: var(--skin-tone-light);
+}
+
+.character-skin-medium {
+  fill: var(--skin-tone-medium);
+}
+
+.character-skin-dark {
+  fill: var(--skin-tone-dark);
+}
+
+/* Background elements */
+.background-grid {
+  fill: var(--shape-background);
+}
+
+.background-gradient-main {
+  fill: url(#main-gradient);
+}
+
+.background-gradient-india {
+  fill: url(#india-gradient);
+}
+
+.background-gradient-tech {
+  fill: url(#tech-gradient);
+}
+
+/* Interactive elements */
+.interactive-highlight {
+  fill: var(--secondary-accent);
+  filter: drop-shadow(0 0 8px rgba(255, 107, 53, 0.7));
+}
+
+.interactive-hover {
+  transition: all 0.3s ease;
+}
+
+/* Transition animations */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s ease-in forwards;
+}
+
+.slide-in-left {
+  transform: translateX(-100px);
+  animation: slideInLeft 0.8s ease-out forwards;
+}
+
+.slide-in-right {
+  transform: translateX(100px);
+  animation: slideInRight 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  to { transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  to { transform: translateX(0); }
+}
+
+/* Specific scene elements */
+.city-india {
+  fill: var(--india-saffron);
+}
+
+.city-finland {
+  fill: var(--tech-blue);
+}
+
+.infographic-icon {
+  fill: var(--secondary-accent);
+}
+
+.statistic-highlight {
+  fill: var(--tertiary-accent);
+  font-weight: bold;
+}
