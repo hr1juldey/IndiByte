@@ -1,11 +1,16 @@
 # IndiByte Community Guidelines
 
-[[Project_IndiByte_Structured]] ← Back to Project Overview
-[[IndiByte_PRD]] ← Back to PRD
-[[API Documentation]] ← Back to API Docs
-[[Database Schema]] ← Back to Database Schema
-[[Contributor Guidelines]] ← Back to Contributor Guidelines
-[[Technical Architecture]] ← Back to Technical Architecture
+[Project_IndiByte_Structured](Project_IndiByte_Structured.md) ← Back to Project Overview
+
+[IndiByte_PRD](IndiByte_PRD.md) ← Back to PRD
+
+[API Documentation](API_Documentation.md) ← Back to API Docs
+
+[Database Schema](Database_Schema.md) ← Back to Database Schema
+
+[Contributor Guidelines](Contributor_Guidelines.md) ← Back to Contributor Guidelines
+
+[Technical Architecture](Technical_Architecture.md) ← Back to Technical Architecture
 
 ---
 
@@ -344,4 +349,4 @@ We continuously strive to improve our community experience. Your feedback is val
 
 Thank you for joining the IndiByte community! Together, we're building something extraordinary that will impact the health and nutrition of 1.7 billion people. Your voice, your knowledge, and your passion matter. Let's grow this community together to create a platform that truly reflects India's diverse culinary heritage while providing the scientific nutrition guidance we all need.
 
-[[Project_IndiByte_Structured]] | [[IndiByte_PRD]] | [[API Documentation]] | [[Database Schema]] | [[Contributor Guidelines]] | [[Technical Architecture]]
+[Project_IndiByte_Structured](Project_IndiByte_Structured.md) | [IndiByte_PRD](IndiByte_PRD.md) | [API Documentation](API_Documentation.md) | [Database Schema](Database_Schema.md) | [Contributor Guidelines](Contributor_Guidelines.md) | [Technical Architecture](Technical_Architecture.md)

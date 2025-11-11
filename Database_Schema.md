@@ -1,8 +1,8 @@
 # IndiByte Database Schema
 
-[[Project_IndiByte_Structured]] ← Back to Project Overview
-[[IndiByte_PRD]] ← Back to PRD
-[[API Documentation]] ← Back to API Docs
+[Project_IndiByte_Structured](Project_IndiByte_Structured.md) ← Back to Project Overview
+[IndiByte_PRD](IndiByte_PRD.md) ← Back to PRD
+[API Documentation](API_Documentation.md) ← Back to API Docs
 
 ---
 
@@ -1045,4 +1045,4 @@ CHECK (condition_name IN (
 
 ---
 
-[[Project_IndiByte_Structured]] | [[IndiByte_PRD]] | [[API Documentation]]
+[Project_IndiByte_Structured](Project_IndiByte_Structured.md) | [IndiByte_PRD](IndiByte_PRD.md) | [API Documentation](API_Documentation.md)

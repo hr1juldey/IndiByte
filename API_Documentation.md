@@ -1,11 +1,12 @@
 # IndiByte API Documentation
 
-[[Project_IndiByte_Structured]] ← Back to Project Overview
-[[IndiByte_PRD]] ← Back to PRD
+[Project_IndiByte_Structured](Project_IndiByte_Structured.md) ← Back to Project Overview
+[IndiByte_PRD](IndiByte_PRD.md) ← Back to PRD
 
 ---
 
 ## Table of Contents
+
 - [Overview](#overview)
 - [Authentication](#authentication)
 - [Base URL](#base-url)
@@ -23,10 +24,12 @@
 The IndiByte API provides programmatic access to India's comprehensive database of food nutrition, cultural context, and dietary recommendations. Our API is designed to be integration-friendly for health platforms, food delivery apps, dietitians, and AI systems.
 
 ### API Version
+
 - Current Version: v1
 - Base Path: `/api/v1`
 
 ### Core Principles
+
 - **Zero Cost for Public Health**: Free access for government health initiatives and non-profits
 - **Machine-Readable**: Optimized for programmatic consumption
 - **Real-time Data**: Up-to-date information on Indian foods and nutrition
@@ -43,6 +46,7 @@ Authorization: Bearer YOUR_API_KEY
 ```
 
 ### Getting an API Key
+
 - For commercial use: Register at api.indibyte.org/register
 - For public health use: Automatically approved with verification
 - For development: Request a sandbox key (1000 requests/day)
@@ -66,6 +70,7 @@ Sandbox: `https://sandbox.api.indibyte.org/v1`
 | Commercial | 1000 | 100,000 | Production applications |
 
 Rate limit headers are returned in all responses:
+
 - `X-RateLimit-Limit`: Request limit for the time window
 - `X-RateLimit-Remaining`: Remaining requests in current window
 - `X-RateLimit-Reset`: Time when the current window resets
@@ -77,9 +82,11 @@ Rate limit headers are returned in all responses:
 ### Food Data Endpoints
 
 #### GET /foods
+
 Search for Indian foods in the database.
 
 **Parameters**:
+
 - `q` (string, optional): Search query (food name, ingredient)
 - `category` (string, optional): Food category filter (e.g., "vegetable", "pulse", "fish", "spice")
 - `limit` (integer, optional): Number of results (1-50, default: 10)
@@ -89,12 +96,14 @@ Search for Indian foods in the database.
 - `medical_condition` (string, optional): Condition-specific recommendations (e.g., "diabetes", "gout")
 
 **Example Request**:
+
 ```
 GET /api/v1/foods?q=roti&category=grain&limit=5
 Authorization: Bearer YOUR_API_KEY
 ```
 
 **Response**:
+
 ```json
 {
   "data": [
@@ -152,18 +161,22 @@ Authorization: Bearer YOUR_API_KEY
 ```
 
 #### GET /foods/{id}
+
 Get detailed information for a specific food item.
 
 **Path Parameters**:
+
 - `id` (string): Unique identifier for the food item
 
 **Example Request**:
+
 ```
 GET /api/v1/foods/rohu-fish
 Authorization: Bearer YOUR_API_KEY
 ```
 
 **Response**:
+
 ```json
 {
   "data": {
@@ -214,9 +227,11 @@ Authorization: Bearer YOUR_API_KEY
 ```
 
 #### POST /foods/search
+
 Advanced search with multiple filters.
 
 **Request Body**:
+
 ```json
 {
   "query": "dal",
@@ -236,6 +251,7 @@ Advanced search with multiple filters.
 ```
 
 **Response**:
+
 ```json
 {
   "data": [
@@ -278,9 +294,11 @@ Advanced search with multiple filters.
 ### Personalization Endpoints
 
 #### POST /recommendations/personalized
+
 Generate personalized food recommendations based on user profile.
 
 **Request Body**:
+
 ```json
 {
   "user_profile": {
@@ -305,6 +323,7 @@ Generate personalized food recommendations based on user profile.
 ```
 
 **Response**:
+
 ```json
 {
   "recommendations": [
@@ -360,15 +379,18 @@ Generate personalized food recommendations based on user profile.
 ```
 
 #### GET /recommendations/popular
+
 Get trending or popular food recommendations based on region or dietary needs.
 
 **Parameters**:
+
 - `region` (string, optional): Regional preference (e.g., "south_indian", "bengali", "punjabi")
 - `diet_type` (string, optional): Diet type (e.g., "diabetic", "weight_loss", "heart_healthy")
 - `season` (string, optional): Seasonal preference (e.g., "summer", "winter")
 - `population_group` (string, optional): Target group (e.g., "pregnant_women", "elderly", "children")
 
 **Example Request**:
+
 ```
 GET /api/v1/recommendations/popular?region=bengali&diet_type=diabetic&season=winter
 Authorization: Bearer YOUR_API_KEY
@@ -377,9 +399,11 @@ Authorization: Bearer YOUR_API_KEY
 ### Recipe Endpoints
 
 #### GET /recipes/{id}
+
 Get detailed recipe instructions.
 
 **Response**:
+
 ```json
 {
   "data": {
@@ -433,9 +457,11 @@ Get detailed recipe instructions.
 ### Integration Endpoints
 
 #### POST /integration/validate-food
+
 Validate if a food item exists in our database for integration purposes.
 
 **Request Body**:
+
 ```json
 {
   "food_name": "Chole Bhature",
@@ -446,6 +472,7 @@ Validate if a food item exists in our database for integration purposes.
 ```
 
 **Response**:
+
 ```json
 {
   "matches": [
@@ -492,6 +519,7 @@ All API responses follow this standard format:
 ```
 
 For error responses:
+
 ```json
 {
   "status": "error",
@@ -536,16 +564,19 @@ For error responses:
 ## SDKs & Libraries
 
 ### Node.js
+
 ```bash
 npm install indibyte-api
 ```
 
 ### Python
+
 ```bash
 pip install indibyte-api
 ```
 
 ### Java
+
 ```xml
 <dependency>
     <groupId>org.indibyte</groupId>
@@ -559,6 +590,7 @@ pip install indibyte-api
 ## Examples
 
 ### JavaScript (Node.js)
+
 ```javascript
 const { IndiByteClient } = require('indibyte-api');
 
@@ -597,6 +629,7 @@ async function getRecommendations() {
 ```
 
 ### Python
+
 ```python
 from indibyte_api import IndiByteClient
 
@@ -629,6 +662,7 @@ recommendations = client.recommendations.personalized(
 For real-time updates, register webhook endpoints:
 
 #### POST /webhooks/register
+
 ```json
 {
   "event_type": "food_database_update",
@@ -638,6 +672,7 @@ For real-time updates, register webhook endpoints:
 ```
 
 Supported events:
+
 - `food_database_update`: When new foods are added or existing ones updated
 - `nutritional_guidance_update`: When medical recommendations are updated
 - `regional_preference_update`: When regional food preferences change
@@ -647,6 +682,7 @@ Supported events:
 ## Changelog
 
 ### v1.0.0 (Current)
+
 - Initial public release
 - Food search with comprehensive nutrition data
 - Personalized recommendation engine
@@ -658,10 +694,11 @@ Supported events:
 ## Support
 
 For API support:
-- Email: api-support@indibyte.org
-- Documentation: https://docs.indibyte.org
-- Community: https://community.indibyte.org
+
+- Email: <api-support@indibyte.org>
+- Documentation: <https://docs.indibyte.org>
+- Community: <https://community.indibyte.org>
 
 ---
 
-[[Project_IndiByte_Structured]] | [[IndiByte_PRD]]
+[Project_IndiByte_Structured](Project_IndiByte_Structured.md) | [IndiByte_PRD](IndiByte_PRD.md)

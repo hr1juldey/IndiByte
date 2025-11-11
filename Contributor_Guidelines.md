@@ -1,9 +1,9 @@
 # IndiByte Contributor Guidelines
 
-[[Project_IndiByte_Structured]] ← Back to Project Overview
-[[IndiByte_PRD]] ← Back to PRD
-[[API Documentation]] ← Back to API Docs
-[[Database Schema]] ← Back to Database Schema
+[Project_IndiByte_Structured](Project_IndiByte_Structured.md) ← Back to Project Overview
+[IndiByte_PRD](IndiByte_PRD.md) ← Back to PRD
+[API Documentation](API_Documentation.md) ← Back to API Docs
+[Database Schema](Database_Schema.md) ← Back to Database Schema
 
 ---
 
@@ -387,7 +387,7 @@ When contributing food data, ensure you provide:
 ## Questions?
 
 If you have any questions about contributing to IndiByte:
-1. Check the [[FAQ]] first
+1. Check the [FAQ](FAQ.md) first
 2. Search in the [Community Forum](https://community.indibyte.org)
 3. Create a new post in the forum
 4. Contact the community team at contributors@indibyte.org
@@ -396,4 +396,4 @@ If you have any questions about contributing to IndiByte:
 
 *Thank you for contributing to IndiByte! Together, we're building a platform that makes culturally appropriate, accurate nutrition accessible to 1.7 billion people.*
 
-[[Project_IndiByte_Structured]] | [[IndiByte_PRD]] | [[API Documentation]] | [[Database Schema]]
+[Project_IndiByte_Structured](Project_IndiByte_Structured.md) | [IndiByte_PRD](IndiByte_PRD.md) | [API Documentation](API_Documentation.md) | [Database Schema](Database_Schema.md)

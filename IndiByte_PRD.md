@@ -1,10 +1,11 @@
 # IndiByte Product Requirements Document (PRD)
 
-[[Project_IndiByte_Structured]] ← Back to Project Overview
+[Project_IndiByte_Structured](Project_IndiByte_Structured.md) ← Back to Project Overview
 
 ---
 
 ## Table of Contents
+
 - [Document Information](#document-information)
 - [Executive Summary](#executive-summary)
 - [Problem Statement](#problem-statement)
@@ -23,6 +24,7 @@
 ---
 
 ## Document Information
+
 - **Product Name**: IndiByte
 - **Version**: 1.0
 - **Author**: IndiByte Product Team
@@ -55,17 +57,20 @@ Most global dietary standards are based on European/American food patterns, crea
 ## Goals & Objectives
 
 ### Primary Goals
+
 1. **Cultural Alignment**: Achieve 100% alignment between dietary recommendations and Indian food culture
 2. **Accessibility**: Provide zero-cost access for public health initiatives
 3. **Accuracy**: Ensure all medical claims are ICMR-validated
 
 ### Secondary Goals
+
 1. Reduce dietitian "guesswork" by 90% within 18 months
 2. Enable machine-readable integration with existing platforms (Zomato, Practo, etc.)
 3. Create a community-driven validation system
 
 ### Success Metrics
-- **Quantitative**: 
+
+- **Quantitative**:
   - 10M+ users by 2025
   - 500+ initial high-impact foods in database
   - 70% faster menu customization for cloud kitchens
@@ -91,19 +96,23 @@ Most global dietary standards are based on European/American food patterns, crea
 ## User Stories
 
 ### For Dietitians
+
 - As a dietitian, I want to access standardized nutritional data for Indian foods, so that I can make accurate dietary recommendations without guesswork.
 - As a dietitian, I want to find culturally appropriate alternatives for medical conditions, so that my patients are more likely to follow my advice.
 - As a dietitian, I want to filter foods by economic tier, so that I can recommend affordable options for my patients.
 
 ### For Cloud Kitchens
+
 - As a cloud kitchen operator, I want to auto-generate culturally aligned, budget-friendly menus, so that I can serve the Indian market effectively.
 - As a cloud kitchen operator, I want to tag menu items with medical benefits, so that I can attract health-conscious customers.
 
 ### For Patients/Individuals
+
 - As an individual with diabetes, I want personalized Indian food recommendations, so that I can follow culturally appropriate dietary restrictions.
 - As a Gen-Z solo cook, I want easy-to-follow Indian recipes with health benefits highlighted, so that I can maintain good health with convenient cooking.
 
 ### For AI Agents
+
 - As an AI agent, I want access to machine-readable food data, so that I can provide personalized nutrition recommendations.
 - As an AI agent, I want to understand the cultural context of foods, so that I can make appropriate substitutions.
 
@@ -114,6 +123,7 @@ Most global dietary standards are based on European/American food patterns, crea
 ### Core Features
 
 #### 1. India-First Food Database
+
 - **Functional Requirements**:
   - Store nutritional information (calories, macronutrients, micronutrients) for Indian ingredients
   - Include cultural context (regional preferences, dietary restrictions)
@@ -129,6 +139,7 @@ Most global dietary standards are based on European/American food patterns, crea
   - Preparation methods and cooking tips
 
 #### 2. AI-Powered Personalization Engine
+
 - **Functional Requirements**:
   - Accept user inputs: medical conditions, dietary preferences, budget constraints
   - Generate personalized food recommendations
@@ -136,6 +147,7 @@ Most global dietary standards are based on European/American food patterns, crea
   - Support multiple dietary restrictions simultaneously
 
 #### 3. Machine-Readable API
+
 - **Functional Requirements**:
   - RESTful API endpoints for database access
   - Support for food recommendations based on filters
@@ -146,6 +158,7 @@ Most global dietary standards are based on European/American food patterns, crea
 ### Supporting Features
 
 #### 4. Community Contribution Platform
+
 - **Functional Requirements**:
   - User authentication and role-based access
   - Food data submission and validation workflow
@@ -153,6 +166,7 @@ Most global dietary standards are based on European/American food patterns, crea
   - Community moderation tools
 
 #### 5. Mobile Application
+
 - **Functional Requirements**:
   - Food search and discovery
   - Personalized recommendations
@@ -164,12 +178,14 @@ Most global dietary standards are based on European/American food patterns, crea
 ## Technical Requirements
 
 ### System Architecture
+
 - **Backend**: Scalable API infrastructure supporting concurrent requests
 - **Database**: NoSQL for flexible food data schema
 - **Frontend**: Responsive web application and mobile app
 - **Integration**: RESTful API for third-party platform integration
 
 ### Database Schema Requirements
+
 ```
 Food Item {
   id: string (unique identifier)
@@ -200,6 +216,7 @@ Food Item {
 ```
 
 ### API Requirements
+
 - **Authentication**: OAuth 2.0 for secure access
 - **Rate Limiting**: Fair usage policy with different tiers
 - **Data Formats**: JSON response format with consistent structure
@@ -207,6 +224,7 @@ Food Item {
 - **Search**: Full-text search across food names, aliases, and categories
 
 ### Security Requirements
+
 - All medical data must be validated by ICMR-authorized sources
 - User data privacy compliant with Indian IT Act
 - API keys for third-party integrations
@@ -227,6 +245,7 @@ Food Item {
 | Healthy Order Increase | N/A | 40%+ for integrated platforms | Partner analytics |
 
 ### Qualitative Metrics
+
 - User satisfaction scores (target: 4.5/5)
 - Community contribution growth
 - Medical accuracy validation rate (target: 99%+)
@@ -236,16 +255,19 @@ Food Item {
 ## Constraints
 
 ### Technical Constraints
+
 - Must run on commodity hardware for cost-effectiveness
 - API response time <200ms for 95% of requests
 - Support for offline mobile functionality
 
 ### Business Constraints
+
 - Zero cost for public health use
 - Open-source requirement limits monetization options initially
 - Regulatory compliance with Indian medical standards
 
 ### Data Constraints
+
 - All medical claims must be ICMR-validated
 - Cultural sensitivity requirements
 - Regional dietary restrictions must be respected
@@ -268,12 +290,14 @@ Food Item {
 ## Dependencies
 
 ### External Dependencies
+
 - Indian Council of Medical Research (ICMR) for data validation
 - Government health initiatives (Ayushman Bharat) for adoption
 - Third-party platforms (Zomato, Practo) for integration pilots
 - Cloud infrastructure providers for hosting
 
 ### Internal Dependencies
+
 - Data collection team for food database expansion
 - Medical advisory board for validation
 - Engineering team for API development
@@ -284,18 +308,21 @@ Food Item {
 ## Timeline
 
 ### Phase 1: Foundation (Months 1-3)
+
 - [ ] Core database setup with 500 high-impact foods
 - [ ] Basic API infrastructure
 - [ ] Initial data validation processes
 - [ ] MVP web interface
 
 ### Phase 2: Validation (Months 4-6)
+
 - [ ] Pilot with 2 major platforms (e.g., Zomato, Practo)
 - [ ] Medical advisory board validation
 - [ ] Community contributor onboarding
 - [ ] Basic personalization engine
 
 ### Phase 3: Growth (Months 7-12)
+
 - [ ] Mobile application launch
 - [ ] 2000+ food items in database
 - [ ] Advanced personalization features
@@ -303,6 +330,7 @@ Food Item {
 - [ ] 10M+ target user acquisition
 
 ### Phase 4: Scale (Months 13-18)
+
 - [ ] Full feature set
 - [ ] Multiple platform integrations
 - [ ] Advanced AI engine
@@ -326,12 +354,12 @@ The following features are explicitly out of scope for the initial release:
 
 ## Links to Related Documents
 
-- [[Project_IndiByte_Structured]] - Project Overview
-- [[API Documentation]] - Technical API Details
-- [[Database Schema]] - Detailed Schema Definition
-- [[Technical Architecture]] - System Architecture
-- [[Community Guidelines]] - Community Management
-- [[Contributor Guidelines]] - Contribution Process
+- [Project_IndiByte_Structured](Project_IndiByte_Structured.md) - Project Overview
+- [API Documentation](API_Documentation.md) - Technical API Details
+- [Database Schema](Database_Schema.md) - Detailed Schema Definition
+- [Technical Architecture](Technical_Architecture.md) - System Architecture
+- [Community Guidelines](Community_Guidelines.md) - Community Management
+- [Contributor Guidelines](Contributor_Guidelines.md) - Contribution Process
 
 ---
 

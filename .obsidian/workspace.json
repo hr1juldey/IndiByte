@@ -6,7 +6,7 @@
       {
         "id": "c7b514de1fd61592",
         "type": "tabs",
-        "dimension": 47.83393501805054,
+        "dimension": 33.39350180505415,
         "children": [
           {
             "id": "6d941a1ec0594f0e",
@@ -27,7 +27,7 @@
       {
         "id": "e4c003687928f00f",
         "type": "tabs",
-        "dimension": 52.16606498194946,
+        "dimension": 66.60649819494584,
         "children": [
           {
             "id": "1a0c45da0e7361b6",
@@ -219,20 +219,43 @@
       "publish:Publish changes...": false
     }
   },
-  "active": "6d941a1ec0594f0e",
+  "active": "1a0c45da0e7361b6",
   "lastOpenFiles": [
-    "IndiByte_PRD.md",
+    "media/scenes/scene_12_vision_nutritional_sovereignty.md",
+    "media/scenes/scene_11_scale_impact_2025.md",
+    "media/scenes/scene_10_community_validation.md",
+    "media/scenes/scene_09_pilot_success_zomato.md",
+    "media/scenes/scene_08_open_api_infrastructure.md",
+    "media/scenes/scene_07_ai_personalization_engine.md",
+    "media/scenes/scene_06_comprehensive_database.md",
+    "media/scenes/scene_05_technical_solution.md",
+    "media/scenes/scene_04_economic_reality.md",
+    "media/scenes/scene_03_scale_17_billion.md",
+    "media/scenes/scene_02_setup_problem.md",
+    "media/scenes/scene_01_opening_hook.md",
+    "media/scenes",
+    "media/script/HLS.md",
+    "media/script",
+    "media/sources/kurzgesagt_storytelling_techniques_example.md",
+    "media/sources/kurzgesagt_visual_style_example.md",
+    "media/sources/kurzgesagt_script_example.md",
+    "media/sources",
+    "media",
+    "home/riju279/Documents/Projects/IndiByte/IndiByte/API_Documentation.md",
+    "home/riju279/Documents/Projects/IndiByte/IndiByte",
+    "home/riju279/Documents/Projects/IndiByte",
+    "home/riju279/Documents/Projects",
+    "home/riju279/Documents",
+    "home/riju279",
+    "home",
+    "docs/sources/SUMMARY.md",
     "Project_IndiByte_Structured.md",
-    "FAQ.md",
-    "Community_Guidelines.md",
-    "Technical_Architecture.md",
-    "Contributor_Guidelines.md",
-    "Database_Schema.md",
-    "API_Documentation.md",
-    "README.md",
-    "Project_IndiByte.md",
-    "Licence.md",
-    "pyproject.toml",
-    "main.py"
+    "docs/sources/IndiByte_Research_Sources_Summary.md",
+    "docs/sources/Ministry_of_Health_Nutrition_Data_Systems.md",
+    "docs/sources/Microservices_Architecture_Kubernetes_Research.md",
+    "docs/sources/FSSAI_Food_Safety_Standards_India.md",
+    "docs/sources/API_Design_Patterns_Nutrition_Health_Data.md",
+    "docs/sources/Database_Architecture_Nutrition_Information_Systems.md",
+    "docs/sources/AI_in_Nutrition_and_Dietetics_Review.md"
   ]
 }

@@ -1,4 +1,4 @@
-# IndiByte: Open-source. India-first. Science-backed.
+# IndiByte: Open-source. India-first. Science-backed
 
 [![GitHub](https://img.shields.io/badge/GitHub-IndiByte-181717?logo=github)](https://github.com/indibyte)
 [![API Docs](https://img.shields.io/badge/API_Docs-Ready-0077B5?logo=swagger)](https://api.indibyte.org/docs)
@@ -16,24 +16,27 @@ IndiByte addresses this critical gap by providing a unified, open-source platfor
 
 **Vision**: *"Your plate, standardized. Your health, personalized."*
 
-For detailed information, see our [[Project_IndiByte_Structured]] document.
+For detailed information, see our [Project_IndiByte_Structured.md](Project_IndiByte_Structured.md) document.
 
 ---
 
 ## Key Components
 
 ### 1. India-First Food Database
+
 - Comprehensive nutritional data for Indian ingredients (e.g., Rohu fish, Toor Dal, Amla)
 - Cultural context and dietary restrictions
 - Economic tier information for accessibility
 - Medical guidance for specific conditions
 
 ### 2. AI-Powered Personalization Engine
+
 - Condition-based food recommendations
 - Culturally aligned substitutions
 - Budget-conscious meal planning
 
 ### 3. Machine-Readable API
+
 - Zero-cost access for public health initiatives
 - Integration-ready for various platforms
 - Eliminates manual recipe adaptation
@@ -54,6 +57,7 @@ For detailed information, see our [[Project_IndiByte_Structured]] document.
 ## Pilot Results
 
 Initial integration with Zomato showed promising results:
+
 - 161% increase in healthy meal orders
 - 112% improvement in user retention (7 days)
 - 124% increase in dietitian trust scores

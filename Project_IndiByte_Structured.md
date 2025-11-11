@@ -1,4 +1,4 @@
-# IndiByte: Open-source. India-first. Science-backed.
+# IndiByte: Open-source. India-first. Science-backed
 
 [![GitHub](https://img.shields.io/badge/GitHub-IndiByte-181717?logo=github)](https://github.com/indibyte)
 [![API Docs](https://img.shields.io/badge/API_Docs-Ready-0077B5?logo=swagger)](https://api.indibyte.org/docs)
@@ -9,6 +9,7 @@
 ---
 
 ## Table of Contents
+
 - [Problem Statement](#problem-statement)
 - [The Solution](#the-solution)
 - [Core Components](#core-components)
@@ -44,6 +45,7 @@ A unified, open-source platform standardizing **Indian food science** for all us
 IndiByte addresses the critical gap between Western nutritional science and India's rich culinary heritage by providing a comprehensive, culturally appropriate, and economically accessible solution for dietary recommendations.
 
 ### Vision Statement
+
 *"Your plate, standardized. Your health, personalized."*
 
 ---
@@ -87,6 +89,7 @@ The most comprehensive standardized database of Indian foods with detailed nutri
 ## Technical Implementation
 
 ### Database Schema Example (Rohu Fish)
+
 ```json
 {
   "nutrition": {
@@ -104,6 +107,7 @@ The most comprehensive standardized database of Indian foods with detailed nutri
 ```
 
 ### API Integration Examples
+
 - For cloud kitchens: `{"recipe": "Aloo Paratha", "allergen_risk": "none", "nutrient_boost": "fiber (22g)"}`
 - For doctors: `{"patient": "post-PCOS", "recommendation": "Increase fenugreek seeds (methi) in dals"}`
 
@@ -132,7 +136,8 @@ The most comprehensive standardized database of Indian foods with detailed nutri
 | Western databases cost ₹10,000+/yr | **Zero cost** for all public health use     | 83% of dietitians now access tools (vs. 17% pre) |
 | Medical claims risk of AI hallucination | ICMR-validated sources required for all claims | 0 medical misinformation incidents (pilot) |
 
-### Key Benefits:
+### Key Benefits
+
 - **Prevents corporate lock-in**: No single company controls dietary standards for 1.7B people
 - **Community-driven updates**: *Farmers* add regional ingredients, *doctors* validate medical claims
 - **Scalability**: Integrates with existing apps via *API*—no new user behavior required
@@ -144,16 +149,19 @@ The most comprehensive standardized database of Indian foods with detailed nutri
 ## Roadmap
 
 ### Phase 1: Foundation
+
 - [ ] Build Core Database with 500 high-impact foods using ICMR + *National Food Security Act* data
 - [ ] Develop API infrastructure with basic endpoints
 - [ ] Create initial data validation processes
 
 ### Phase 2: Integration
+
 - [ ] Integrate with 2 Major Platforms (Pilot with *Zomato* and *Practo*)
 - [ ] Launch developer portal and documentation
 - [ ] Implement AI personalization engine
 
 ### Phase 3: Community & Growth
+
 - [ ] Launch "Gen-Z Starter Kit": *"5-Day Indian Gut-Healthy Meal Plan (₹100/day)"* with step-by-step videos
 - [ ] Expand database to 2000+ ingredients
 - [ ] Establish regional contributor networks
@@ -175,13 +183,13 @@ The most comprehensive standardized database of Indian foods with detailed nutri
 
 ## Related Documentation
 
-- [[IndiByte_PRD]] (Product Requirements Document)
-- [[API Documentation]] (API Endpoints and Integration Guide)
-- [[Database Schema]] (Data Models and Architecture)
-- [[Contributor Guidelines]] (How to Contribute to IndiByte)
-- [[Technical Architecture]] (System Design and Infrastructure)
-- [[Community Guidelines]] (Community Participation and Values)
-- [[FAQ]] (Frequently Asked Questions)
+- [IndiByte_PRD](IndiByte_PRD.md) (Product Requirements Document)
+- [API Documentation](API_Documentation.md) (API Endpoints and Integration Guide)
+- [Database Schema](Database_Schema.md) (Data Models and Architecture)
+- [Contributor Guidelines](Contributor_Guidelines.md) (How to Contribute to IndiByte)
+- [Technical Architecture](Technical_Architecture.md) (System Design and Infrastructure)
+- [Community Guidelines](Community_Guidelines.md) (Community Participation and Values)
+- [FAQ](FAQ.md) (Frequently Asked Questions)
 
 ---
 

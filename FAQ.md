@@ -1,12 +1,12 @@
 # IndiByte Frequently Asked Questions (FAQ)
 
-[[Project_IndiByte_Structured]] ← Back to Project Overview
-[[IndiByte_PRD]] ← Back to PRD
-[[API Documentation]] ← Back to API Docs
-[[Database Schema]] ← Back to Database Schema
-[[Contributor Guidelines]] ← Back to Contributor Guidelines
-[[Technical Architecture]] ← Back to Technical Architecture
-[[Community Guidelines]] ← Back to Community Guidelines
+[Project_IndiByte_Structured](Project_IndiByte_Structured.md) ← Back to Project Overview
+[IndiByte_PRD](IndiByte_PRD.md) ← Back to PRD
+[API Documentation](API_Documentation.md) ← Back to API Docs
+[Database Schema](Database_Schema.md) ← Back to Database Schema
+[Contributor Guidelines](Contributor_Guidelines.md) ← Back to Contributor Guidelines
+[Technical Architecture](Technical_Architecture.md) ← Back to Technical Architecture
+[Community Guidelines](Community_Guidelines.md) ← Back to Community Guidelines
 
 ---
 
@@ -276,4 +276,4 @@ If you have a question not covered in this FAQ:
 
 **Still have questions?** Join our community and connect with other users and contributors. Together, we're building a platform that makes nutrition science accessible, accurate, and culturally appropriate for 1.7 billion people.
 
-[[Project_IndiByte_Structured]] | [[IndiByte_PRD]] | [[API Documentation]] | [[Database Schema]] | [[Contributor Guidelines]] | [[Technical Architecture]] | [[Community Guidelines]]
+[Project_IndiByte_Structured](Project_IndiByte_Structured.md) | [IndiByte_PRD](IndiByte_PRD.md) | [API Documentation](API_Documentation.md) | [Database Schema](Database_Schema.md) | [Contributor Guidelines](Contributor_Guidelines.md) | [Technical Architecture](Technical_Architecture.md) | [Community Guidelines](Community_Guidelines.md)

@@ -1,14 +1,15 @@
 # IndiByte Technical Architecture
 
-[[Project_IndiByte_Structured]] ← Back to Project Overview
-[[IndiByte_PRD]] ← Back to PRD
-[[API Documentation]] ← Back to API Docs
-[[Database Schema]] ← Back to Database Schema
-[[Contributor Guidelines]] ← Back to Contributor Guidelines
+[Project_IndiByte_Structured](Project_IndiByte_Structured.md) ← Back to Project Overview
+[IndiByte_PRD](IndiByte_PRD.md) ← Back to PRD
+[API Documentation](API_Documentation.md) ← Back to API Docs
+[Database Schema](Database_Schema.md) ← Back to Database Schema
+[Contributor Guidelines](Contributor_Guidelines.md) ← Back to Contributor Guidelines
 
 ---
 
 ## Table of Contents
+
 - [Overview](#overview)
 - [Architecture Principles](#architecture-principles)
 - [System Architecture](#system-architecture)
@@ -29,6 +30,7 @@
 The IndiByte technical architecture is designed to support a comprehensive, real-time, and culturally appropriate food nutrition database for India. The architecture prioritizes scalability, data accuracy, low-latency access, and seamless integration capabilities for third-party platforms like food delivery apps and healthcare providers.
 
 ### Core Components
+
 - **Data Platform**: Centralized database of Indian foods with nutritional and cultural information
 - **API Gateway**: RESTful APIs for data access and integrations
 - **Recommendation Engine**: AI-powered personalization system
@@ -40,26 +42,31 @@ The IndiByte technical architecture is designed to support a comprehensive, real
 ## Architecture Principles
 
 ### 1. India-First Design
+
 - Optimized for Indian food characteristics and consumption patterns
 - Supports 22 official languages of India
 - Designed for variable internet connectivity scenarios
 
 ### 2. Accuracy-First Approach
+
 - All medical claims must be ICMR-validated
 - Multi-layer validation for contributed data
 - Clear distinction between nutritional facts and recommendations
 
 ### 3. Scalability & Performance
+
 - Support for 1M+ API requests per day
 - Sub-200ms response times for common queries
 - Horizontal scaling capabilities
 
 ### 4. Open & Accessible
+
 - Zero-cost access for public health initiatives
 - Community-driven data enhancement
 - Transparent validation processes
 
 ### 5. Privacy & Security
+
 - User data privacy compliance with Indian IT Act
 - Secure API access with OAuth 2.0
 - Encrypted data storage and transmission
@@ -69,7 +76,8 @@ The IndiByte technical architecture is designed to support a comprehensive, real
 ## System Architecture
 
 ### High-Level Architecture
-```
+
+```bash
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   Mobile App    │    │   Web Portal    │    │ Third-Party App │
 └─────────┬───────┘    └─────────┬───────┘    └─────────┬───────┘
@@ -108,6 +116,7 @@ The IndiByte technical architecture is designed to support a comprehensive, real
 ### Core Services
 
 #### 1. API Gateway Service
+
 - **Responsibility**: Request routing, authentication, rate limiting
 - **Technology**: Kong API Gateway or custom Node.js service
 - **Features**:
@@ -117,6 +126,7 @@ The IndiByte technical architecture is designed to support a comprehensive, real
   - API monitoring and analytics
 
 #### 2. Search Service
+
 - **Responsibility**: Food and nutrition search capabilities
 - **Technology**: Elasticsearch with custom data indexing
 - **Features**:
@@ -126,6 +136,7 @@ The IndiByte technical architecture is designed to support a comprehensive, real
   - Geographic price and availability search
 
 #### 3. Recommendation Engine
+
 - **Responsibility**: Personalized food recommendations
 - **Technology**: Python with scikit-learn, TensorFlow
 - **Features**:
@@ -135,6 +146,7 @@ The IndiByte technical architecture is designed to support a comprehensive, real
   - A/B testing capabilities
 
 #### 4. Data Validation Service
+
 - **Responsibility**: ICMR validation and data quality assurance
 - **Technology**: Python with custom validation rules
 - **Features**:
@@ -144,6 +156,7 @@ The IndiByte technical architecture is designed to support a comprehensive, real
   - Version control for data changes
 
 #### 5. Community Platform
+
 - **Responsibility**: User contributions and moderation
 - **Technology**: React frontend with Node.js backend
 - **Features**:
@@ -157,6 +170,7 @@ The IndiByte technical architecture is designed to support a comprehensive, real
 ## Technology Stack
 
 ### Backend Technologies
+
 - **Primary Language**: Python (3.9+) for data processing and ML
 - **Web Framework**: FastAPI for API services (high performance)
 - **Alternative Backend**: Node.js for real-time features and integrations
@@ -165,23 +179,27 @@ The IndiByte technical architecture is designed to support a comprehensive, real
 - **Search Engine**: Elasticsearch for full-text search capabilities
 
 ### Database Technologies
+
 - **Primary Database**: MongoDB for flexible food data schema
 - **Relational Database**: PostgreSQL for user accounts and structured data
 - **Caching Layer**: Redis for session management and frequently accessed data
 - **Search Index**: Elasticsearch for food names, categories, and attributes
 
 ### Frontend Technologies
+
 - **Web Application**: React.js with TypeScript
 - **Mobile Application**: React Native for cross-platform development
 - **UI Framework**: Material-UI or Bootstrap CSS for consistent design
 
 ### Infrastructure
+
 - **Cloud Provider**: AWS or GCP (considering data residency requirements)
 - **Container Orchestration**: Kubernetes for service management
 - **CI/CD**: GitHub Actions or GitLab CI/CD
 - **Monitoring**: Prometheus + Grafana for metrics, ELK stack for logs
 
 ### Machine Learning Stack
+
 - **ML Framework**: TensorFlow/PyTorch for recommendation engine
 - **Feature Store**: Feast or custom solution for ML features
 - **MLOps**: MLflow for model lifecycle management
@@ -192,6 +210,7 @@ The IndiByte technical architecture is designed to support a comprehensive, real
 ## Data Flow
 
 ### Food Data Creation Flow
+
 ```
 External Data Sources → Data Ingestion → Validation → Processing → Storage → API Access
 
@@ -228,6 +247,7 @@ External Data Sources → Data Ingestion → Validation → Processing → Stora
 ```
 
 ### Recommendation Generation Flow
+
 ```
 User Request → Profile Analysis → Data Retrieval → ML Processing → Response
 
@@ -261,26 +281,30 @@ User Request → Profile Analysis → Data Retrieval → ML Processing → Respo
 ## Scalability Strategy
 
 ### Horizontal Scaling
+
 - **Stateless Services**: All services are stateless to enable horizontal scaling
 - **Load Balancing**: Multiple instances behind load balancer for each service
 - **Database Sharding**: MongoDB sharding by food categories or geographic data
 - **Caching**: Multi-level caching to reduce database load
 
 ### Database Scaling
+
 - **Read Replicas**: MongoDB read replicas for frequently accessed data
 - **Connection Pooling**: Connection pooling for database access
-- **Caching Strategy**: 
+- **Caching Strategy**:
   - Redis for session data and popular food items
   - CDN for static assets and API responses
 - **Database Partitioning**: Partition by data type or geographic region
 
 ### Auto-Scaling
+
 - **Kubernetes HPA**: Horizontal Pod Autoscaling based on CPU and memory
 - **API Gateway Scaling**: Auto-scale based on request rate
 - **Database Read Replicas**: Auto-scale read replicas based on query load
 - **Cache Scaling**: Auto-scale Redis clusters based on hit rate
 
 ### Traffic Management
+
 - **CDN**: Content Delivery Network for static resources
 - **Regional Deployment**: Multiple regions to reduce latency
 - **Edge Caching**: Cache common queries at edge locations
@@ -291,24 +315,28 @@ User Request → Profile Analysis → Data Retrieval → ML Processing → Respo
 ## Security Architecture
 
 ### Authentication & Authorization
+
 - **API Authentication**: OAuth 2.0 with API keys
 - **User Authentication**: OAuth 2.0/OpenID Connect
 - **Role-Based Access**: Different levels for users, contributors, reviewers, admins
 - **JWT Tokens**: For stateless authentication
 
 ### Data Security
+
 - **Encryption at Rest**: AES-256 encryption for stored data
 - **Encryption in Transit**: TLS 1.3 for all communications
 - **Data Anonymization**: Personal data anonymization for analytics
 - **Access Logging**: Comprehensive audit trails for data access
 
 ### API Security
+
 - **Rate Limiting**: Per-API key rate limiting to prevent abuse
 - **Input Validation**: Strict input validation to prevent injection attacks
 - **Authentication**: Required for all data modification APIs
 - **IP Whitelisting**: For high-privilege administrative APIs
 
 ### Compliance
+
 - **Indian IT Act**: Compliance with Indian data protection requirements
 - **Health Data Protection**: Special handling for health-related data
 - **Data Localization**: Store Indian user data within India
@@ -318,22 +346,26 @@ User Request → Profile Analysis → Data Retrieval → ML Processing → Respo
 ## Performance Considerations
 
 ### Response Time Targets
+
 - **Search APIs**: <200ms for 95% of requests
 - **Recommendation APIs**: <500ms for 95% of requests
 - **Data Retrieval**: <150ms for 95% of requests
 
 ### Caching Strategy
+
 - **Level 1**: Application-level in-memory caching for frequently accessed data
 - **Level 2**: Redis caching for user sessions and popular food items
 - **Level 3**: CDN caching for static assets and public API responses
 
 ### Database Performance
+
 - **Indexing**: Comprehensive indexing for common query patterns
 - **Query Optimization**: Database query optimization and profiling
 - **Connection Management**: Connection pooling and optimized query patterns
 - **Read Replicas**: Distribute read load across replicas
 
 ### Monitoring and Optimization
+
 - **Performance Monitoring**: Real-time performance monitoring and alerting
 - **Query Profiling**: Regular profiling of slow queries
 - **Caching Hit Ratios**: Monitor and optimize caching effectiveness
@@ -344,24 +376,28 @@ User Request → Profile Analysis → Data Retrieval → ML Processing → Respo
 ## Deployment Architecture
 
 ### Environment Setup
+
 - **Development**: Local development with Docker Compose
 - **Staging**: Pre-production environment for testing
 - **Production**: Multi-region production deployment
 - **Disaster Recovery**: Backup region for business continuity
 
 ### Infrastructure as Code
+
 - **Provisioning**: Terraform for infrastructure provisioning
 - **Configuration**: Ansible for system configuration
 - **Container Management**: Kubernetes for container orchestration
 - **Database Management**: Automated deployment and scaling
 
 ### Deployment Strategy
+
 - **Blue-Green**: Zero-downtime deployments using blue-green strategy
 - **Canary Releases**: Gradual rollout of new features
 - **Rollback Capability**: Quick rollback capability for issues
 - **Health Checks**: Comprehensive health checks during deployment
 
 ### Monitoring and Maintenance
+
 - **Health Monitoring**: Service health and dependency monitoring
 - **Performance Monitoring**: Response time and error rate monitoring
 - **Resource Monitoring**: Infrastructure resource utilization
@@ -372,24 +408,28 @@ User Request → Profile Analysis → Data Retrieval → ML Processing → Respo
 ## Monitoring & Observability
 
 ### Metrics Collection
+
 - **Application Metrics**: API response times, error rates, throughput
 - **System Metrics**: CPU, memory, disk, network usage
 - **Business Metrics**: API usage, user engagement, data quality metrics
 - **Custom Metrics**: Food data quality scores, validation success rates
 
 ### Logging
+
 - **Application Logging**: Structured logging with correlation IDs
 - **Access Logging**: API access logs for security and analytics
 - **Audit Logging**: Data modification audit trails
 - **Centralized Logging**: ELK stack for log aggregation and analysis
 
 ### Alerting
+
 - **Performance Alerts**: Response time and error rate thresholds
 - **Infrastructure Alerts**: Resource utilization thresholds
 - **Business Alerts**: Data quality and validation failure alerts
 - **Security Alerts**: Unusual access patterns and security events
 
 ### Dashboards
+
 - **Operations Dashboard**: Real-time service health view
 - **Performance Dashboard**: API and system performance metrics
 - **Business Dashboard**: API usage and user engagement metrics
@@ -400,12 +440,14 @@ User Request → Profile Analysis → Data Retrieval → ML Processing → Respo
 ## API Design
 
 ### RESTful API Principles
+
 - **Resource-Based**: Clear resource-oriented endpoints
 - **Stateless**: Each request contains all necessary information
 - **Consistent**: Consistent response formats and error handling
 - **Versioned**: API versioning with clear deprecation policy
 
 ### Response Format
+
 ```json
 {
   "status": "success",
@@ -418,6 +460,7 @@ User Request → Profile Analysis → Data Retrieval → ML Processing → Respo
 ```
 
 ### Error Format
+
 ```json
 {
   "status": "error",
@@ -432,6 +475,7 @@ User Request → Profile Analysis → Data Retrieval → ML Processing → Respo
 ```
 
 ### Rate Limiting Headers
+
 - `X-RateLimit-Limit`: Request limit for the time window
 - `X-RateLimit-Remaining`: Remaining requests in current window  
 - `X-RateLimit-Reset`: Time when the current window resets
@@ -441,18 +485,21 @@ User Request → Profile Analysis → Data Retrieval → ML Processing → Respo
 ## Integration Points
 
 ### Third-Party Platform Integrations
+
 - **Food Delivery Apps**: Zomato, Swiggy, Uber Eats
 - **Health Platforms**: Practo, Apollo, health tracking apps
 - **IoT Devices**: Smart kitchen appliances, health monitoring devices
 - **Government Databases**: ICMR, FSSAI, Ministry of Health
 
 ### API Integration Patterns
+
 - **Real-time**: Direct API calls for immediate data needs
 - **Batch Sync**: Scheduled data synchronization for large datasets
 - **Event-Driven**: Webhook-based updates for real-time notifications
 - **Data Export**: Bulk data export for research and analytics
 
 ### Security for Integrations
+
 - **Partner Authentication**: Dedicated API keys for each integration
 - **Data Segregation**: Partner-specific data access controls
 - **Usage Monitoring**: Partner-specific usage metrics and billing
@@ -460,4 +507,4 @@ User Request → Profile Analysis → Data Retrieval → ML Processing → Respo
 
 ---
 
-[[Project_IndiByte_Structured]] | [[IndiByte_PRD]] | [[API Documentation]] | [[Database Schema]] | [[Contributor Guidelines]]
+[Project_IndiByte_Structured](Project_IndiByte_Structured.md) | [IndiByte_PRD](IndiByte_PRD.md) | [API Documentation](API_Documentation.md) | [Database Schema](Database_Schema.md) | [Contributor Guidelines](Contributor_Guidelines.md)
