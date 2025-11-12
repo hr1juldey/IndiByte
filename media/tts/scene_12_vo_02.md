@@ -1,8 +1,3 @@
-This isn't about REJECTING SCIENTIFIC NUTRITION PRINCIPLES...
- but about APPLYING them in a way that RESPECTS 
-and INCORPORATES INDIAN FOOD CULTURE.
+Now, this isn't about rejecting scientific nutrition principles. It's about applying them in a way that respects and incorporates Indian food culture.
 
-It's about making sure that when a DIABETIC PATIENT in CHENNAI 
-gets DIETARY ADVICE...
- it reflects the FOODS they actually EAT and can AFFORD...
-like ROHU FISH instead of SALMON.
+It's about making sure that when a diabetic patient in Chennai gets dietary advice, it reflects the foods they actually eat and can afford, like Rohu fish instead of salmon.

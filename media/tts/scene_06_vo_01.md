@@ -1,8 +1,3 @@
-INDIBYTE starts with the INDIAN FOOD COMPOSITION TABLES...
- a DATABASE of FIVE HUNDRED TWENTY-EIGHT key INDIAN FOODS
-published by the INDIAN COUNCIL OF MEDICAL RESEARCH.
+IndiByte starts with the Indian Food Composition Tables - a database of 528 key Indian foods published by the Indian Council of Medical Research.
 
-But it goes BEYOND this...
-incorporating REGIONAL VARIATIONS,
-traditional ingredients like ROHU FISH and TOOR DAL,
-and even the ECONOMIC TIER of each food item.
+But here's where it gets interesting - it goes beyond this, incorporating regional variations, traditional ingredients like Rohu fish and Toor dal, and even the economic tier of each food item.

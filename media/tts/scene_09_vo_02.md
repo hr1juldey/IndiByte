@@ -1,8 +1,3 @@
-These NUMBERS represent REAL PEOPLE making HEALTHIER CHOICES...
- because the RECOMMENDATIONS finally made SENSE
-for their CULTURE and CONTEXT.
+These numbers represent real people making healthier choices because the recommendations finally made sense for their culture and context.
 
-One SPECIFIC EXAMPLE: INDIBYTE'S 'DIABETES-FRIENDLY CHOLE BHATURE'...
- drove TWENTY-TWO PERCENT MORE ORDERS
-than GENERIC 'healthy' options...
-proving that CULTURAL APPROPRIATENESS drives ADOPTION.
+Here's a specific example: IndiByte's 'Diabetes-friendly Chole Bhature' drove 22% more orders than generic 'healthy' options, proving that cultural appropriateness drives adoption.

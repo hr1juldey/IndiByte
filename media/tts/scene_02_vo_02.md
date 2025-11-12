@@ -1,8 +1,3 @@
-For decades... NUTRITION SCIENCE has been like a GLOBAL RESTAURANT CHAIN...
- using one MENU worldwide.
- Whether you're in MUMBAI or MINNEAPOLIS...
-the DIETARY ADVICE is largely the SAME.
+But here's where things get really interesting. In India, this mismatch creates a perfect storm of problems. When a doctor in Chennai tells a diabetic patient to eat "healthy" foods, they often recommend expensive Western alternatives like salmon instead of locally available, culturally familiar Rohu fish.
 
-This makes PERFECT SENSE from a STANDARDIZATION PERSPECTIVE...
- but it completely ignores where we actually eat from.
-Your PLATE... not the PANTRY.
+And here's the kicker - this recommendation is nutritionally sound on paper, but practically useless in reality. It simply doesn't work for the person sitting in that doctor's chair.

@@ -1,6 +1,1 @@
-The ULTIMATE GOAL is "NUTRITIONAL SOVEREIGNTY"...
- ensuring that INDIA'S DIETARY STANDARDS are designed 
-with INDIAN CULTURAL CONTEXT, 
-ECONOMIC REALITY, 
-and NUTRITIONAL NEEDS in mind...
-rather than being DEPENDENT on WESTERN MODELS.
+The ultimate goal is "nutritional sovereignty" - ensuring that India's dietary standards are designed with Indian cultural context, economic reality, and nutritional needs in mind, rather than being dependent on Western models.

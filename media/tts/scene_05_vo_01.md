@@ -1,10 +1,5 @@
-Enter... INDIBYTE.
- An OPEN-SOURCE, INDIA-FIRST NUTRITION PLATFORM
-designed to align DIETARY RECOMMENDATIONS
-with INDIAN CULINARY REALITY.
+So what's the answer? Enter IndiByte. An open-source, India-first nutrition platform designed to align dietary recommendations with Indian culinary reality.
 
-Think of it as building a NEW INFRASTRUCTURE SYSTEM...
- that connects what's actually on INDIAN PLATES
-with what NUTRITION SCIENCE knows about HEALTH.
+Think of it as building a new infrastructure system that connects what's actually on Indian plates with what nutrition science knows about health.
 
-The SOLUTION has THREE INTERCONNECTED PARTS:
+And here's the thing - the solution has three interconnected parts:

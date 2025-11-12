@@ -1,10 +1,5 @@
-Let's put this in ECONOMIC TERMS.
-TOOR DAL costs approximately THIRTY rupees per kg
-while CHICKEN costs TWO FIFTY per kg.
-SALMON? Even MORE EXPENSIVE.
+Let's talk numbers for a second. Toor dal costs approximately thirty rupees per kg, while chicken costs two-fifty per kg. And salmon? Even more expensive.
 
-When DIETARY RECOMMENDATIONS consistently favor EXPENSIVE alternatives...
- they inadvertently make HEALTHY EATING a LUXURY available only to the WEALTHY.
+When dietary recommendations consistently favor expensive alternatives, they inadvertently make healthy eating a luxury available only to the wealthy.
 
-This creates a SYSTEM where GOOD NUTRITION becomes a PRIVILEGE
-rather than a RIGHT.
+This creates a system where good nutrition becomes a privilege rather than a right.

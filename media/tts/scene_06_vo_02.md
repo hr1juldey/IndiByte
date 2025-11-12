@@ -1,3 +1,1 @@
-This DATABASE is like a MASSIVE LIBRARY of INDIAN NUTRITION KNOWLEDGE...
- but designed for the DIGITAL AGE
-and accessible to ANY APPLICATION or SERVICE that needs it.
+This database is like a massive library of Indian nutrition knowledge, but designed for the digital age and accessible to any application or service that needs it.

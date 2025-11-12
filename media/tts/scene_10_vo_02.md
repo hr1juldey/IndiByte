@@ -1,8 +1,3 @@
-It's like having a CROWD-SOURCED MAP...
- where EVERYONE contributes their LOCAL KNOWLEDGE 
-to create a MORE ACCURATE, COMPREHENSIVE PICTURE.
+It's like having a crowd-sourced map where everyone contributes their local knowledge to create a more accurate, comprehensive picture.
 
-A FARMER in MAHARASHTRA can VALIDATE 
-the NUTRITIONAL CONTENT of LOCAL MILLETS...
-while a RESTAURANT OWNER in KERALA 
-can contribute INFORMATION about REGIONAL FISH VARIETIES.
+A farmer in Maharashtra can validate the nutritional content of local millets, while a restaurant owner in Kerala can contribute information about regional fish varieties.

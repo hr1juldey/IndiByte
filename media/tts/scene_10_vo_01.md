@@ -1,9 +1,3 @@
-Unlike PROPRIETARY SYSTEMS... 
-INDIBYTE operates as an OPEN-SOURCE PLATFORM 
-where FARMERS, DOCTORS, HOME COOKS, 
-and NUTRITIONISTS work together 
-to VALIDATE and improve the DATA.
+Unlike proprietary systems, IndiByte operates as an open-source platform where farmers, doctors, home cooks, and nutritionists work together to validate and improve the data.
 
-This COMMUNITY-DRIVEN APPROACH ensures that the PLATFORM 
-reflects REAL INDIAN FOOD CULTURE 
-rather than ABSTRACT NUTRITIONAL VALUES.
+This community-driven approach ensures that the platform reflects real Indian food culture rather than abstract nutritional values.

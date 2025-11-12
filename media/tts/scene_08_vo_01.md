@@ -1,5 +1,1 @@
-The THIRD COMPONENT is a MACHINE-READABLE API
-that ANY PLATFORM can use.
-Whether it's ZOMATO, PRACTO, or a GOVERNMENT HEALTH PROGRAM...
- they can integrate INDIBYTE'S DATA
-to provide CULTURALLY APPROPRIATE RECOMMENDATIONS to their users.
+The third component is a machine-readable API that any platform can use. Whether it's Zomato, Practo, or a government health program, they can integrate IndiByte's data to provide culturally appropriate recommendations to their users.

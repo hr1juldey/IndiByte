@@ -1,8 +1,3 @@
-INDIBYTE represents a FUNDAMENTAL SHIFT in NUTRITION SCIENCE...
- from a ONE-SIZE-FITS-ALL GLOBAL MODEL 
-to a CULTURALLY APPROPRIATE, LOCALLY RELEVANT APPROACH.
+IndiByte represents a fundamental shift in nutrition science - from a one-size-fits-all global model to a culturally appropriate, locally relevant approach.
 
-It's not just an APP or a DATABASE...
- but a NEW INFRASTRUCTURE for NUTRITION 
-that RESPECTS CULTURAL IDENTITY 
-while providing EVIDENCE-BASED HEALTH RECOMMENDATIONS.
+It's not just an app or a database, but a new infrastructure for nutrition that respects cultural identity while providing evidence-based health recommendations.

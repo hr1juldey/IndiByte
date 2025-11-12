@@ -1,8 +1,3 @@
-For decades, NUTRITION SCIENCE has been... like a GLOBAL RESTAURANT CHAIN...
- using one MENU worldwide.
- Whether you're in MUMBAI... or MINNESOTA... the DIETARY ADVICE is largely the same.
+For decades, nutrition science has been like a global restaurant chain, using one menu worldwide. Whether you're in Mumbai or Minnesota, the dietary advice is largely the same.
 
-This makes PERFECT SENSE... from a
-  STANDARDIZATION perspective...
- but it completely ignores... where we actually eat from.
-Your PLATE... not the PANTRY.
+Now, this makes perfect sense from a standardization perspective... but here's the problem - it completely ignores where we actually eat from. Your plate... not the pantry.
