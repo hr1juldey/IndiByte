@@ -8,3 +8,10 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Media files
+
+*.wav
+*.mp3
+*.mp4
+*.svg

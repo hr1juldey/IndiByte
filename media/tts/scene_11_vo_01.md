@@ -1,0 +1,6 @@
+The VISION extends FAR beyond just creating a DATABASE. 
+INDIBYTE aims to reach TEN MILLION PLUS USERS by TWO THOUSAND TWENTY-FIVE...
+including PUBLIC HEALTH INITIATIVES, CLINICS, and CONSUMER APPS.
+
+The PLATFORM is designed to integrate with INDIA'S DIGITAL HEALTH INFRASTRUCTURE...
+ including programs like AYUSHMAN BHARAT.

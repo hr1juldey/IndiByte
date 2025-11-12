@@ -14,12 +14,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Project_IndiByte_Structured.md",
+                "file": "docs/sources/ai-personalized-nutrition-research.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Project_IndiByte_Structured"
+              "title": "ai-personalized-nutrition-research"
             }
           }
         ]
@@ -219,8 +219,12 @@
       "publish:Publish changes...": false
     }
   },
-  "active": "1a0c45da0e7361b6",
+  "active": "6d941a1ec0594f0e",
   "lastOpenFiles": [
+    "API_Documentation.md",
+    "docs/sources/Personalized_Nutrition_ML_Recommendation_Systems.md",
+    "Project_IndiByte_Structured.md",
+    "docs/sources/ai-personalized-nutrition-research.md",
     "media/style/indian_art_style_guide.md",
     "media/MEDIA_INDEX.md",
     "media/style/production-guide.md",
@@ -252,10 +256,6 @@
     "home/riju279/Documents/Projects/IndiByte",
     "home/riju279/Documents/Projects",
     "home/riju279/Documents",
-    "docs/sources/SUMMARY.md",
-    "Project_IndiByte_Structured.md",
-    "docs/sources/IndiByte_Research_Sources_Summary.md",
-    "docs/sources/Ministry_of_Health_Nutrition_Data_Systems.md",
-    "docs/sources/Microservices_Architecture_Kubernetes_Research.md"
+    "docs/sources/SUMMARY.md"
   ]
 }

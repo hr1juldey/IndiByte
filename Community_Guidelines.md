@@ -15,6 +15,7 @@
 ---
 
 ## Table of Contents
+
 - [Welcome to the IndiByte Community](#welcome-to-the-indibyte-community)
 - [Community Values](#community-values)
 - [Code of Conduct](#code-of-conduct)
@@ -37,9 +38,11 @@ Welcome to the IndiByte community! We're excited to have you join us in our miss
 Our community is made up of diverse stakeholders including dietitians, doctors, farmers, chefs, researchers, developers, and everyday citizens who share our vision of nutrition science that reflects the Indian plate, not the pantry.
 
 ### Our Mission
+
 To build India's most comprehensive, accurate, and culturally appropriate food nutrition database that serves the health and wellness needs of our diverse population.
 
 ### Our Vision
+
 "Your plate, standardized. Your health, personalized."
 
 ---
@@ -49,21 +52,27 @@ To build India's most comprehensive, accurate, and culturally appropriate food n
 Our community is guided by these core values that shape how we interact, contribute, and grow together:
 
 ### 1. Inclusivity
+
 We welcome contributors from all backgrounds, regions, and walks of life. Indian cuisine is diverse, and so are we. Every voice matters in building a platform that serves 1.7 billion people.
 
 ### 2. Accuracy
+
 We prioritize factual, evidence-based information. All health claims must be validated by credible sources, preferably ICMR-recognized authorities. Quality over quantity always.
 
 ### 3. Cultural Respect
+
 We honor India's rich culinary traditions and regional variations. Food is deeply connected to culture, tradition, and religious practices.
 
 ### 4. Transparency
+
 Open processes, clear communication, and accessible documentation. We believe in building trust through transparency.
 
 ### 5. Collaboration
+
 We achieve more together than individually. Sharing knowledge, skills, and resources strengthens our collective impact.
 
 ### 6. Accessibility
+
 Making nutrition information accessible across economic tiers and technological capabilities. No one should be excluded from accessing vital nutrition information.
 
 ---
@@ -71,9 +80,11 @@ Making nutrition information accessible across economic tiers and technological 
 ## Code of Conduct
 
 ### Our Pledge
+
 We as members, contributors, and leaders pledge to make participation in our community a harassment-free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, caste, religion, or sexual identity and orientation.
 
 ### Expected Behavior
+
 - Participate authentically and with respect for others
 - Be respectful of different viewpoints and experiences
 - Acknowledge and learn from mistakes
@@ -82,6 +93,7 @@ We as members, contributors, and leaders pledge to make participation in our com
 - Respect cultural differences in dietary practices and beliefs
 
 ### Unacceptable Behavior
+
 - Harassment, including unwelcome comments related to personal characteristics
 - Trolling, insulting, or derogatory comments
 - Personal or political attacks
@@ -90,10 +102,12 @@ We as members, contributors, and leaders pledge to make participation in our com
 - Other conduct that could reasonably be considered inappropriate in a professional setting
 
 ### Reporting Guidelines
+
 If you experience or witness unacceptable behavior:
+
 1. Contact community moderators directly
 2. Use the reporting feature in our communication platforms
-3. Email community@indibyte.org with "URGENT" in the subject line
+3. Email <community@indibyte.org> with "URGENT" in the subject line
 4. In cases of immediate safety concerns, contact local law enforcement
 
 All complaints will be reviewed and investigated promptly and fairly. Confidentiality will be maintained for the safety of all parties involved.
@@ -103,12 +117,14 @@ All complaints will be reviewed and investigated promptly and fairly. Confidenti
 ## Community Structure
 
 ### Governance Model
+
 - **Steering Committee**: Core maintainers making high-level decisions
 - **Working Groups**: Focused teams on specific areas (data, tech, medical, community)
 - **Regional Representatives**: Community members representing different Indian regions
 - **Contributor Network**: Active contributors across various domains
 
 ### Working Groups
+
 1. **Data & Nutrition**: Food data accuracy, nutritional information
 2. **Technology & Infrastructure**: Platform development, performance, security
 3. **Medical & Validation**: Health claims validation, ICMR compliance
@@ -120,16 +136,19 @@ All complaints will be reviewed and investigated promptly and fairly. Confidenti
 ## Communication Channels
 
 ### Primary Channels
+
 - **Community Forum**: [community.indibyte.org](https://community.indibyte.org) - For discussions, Q&A, and long-form conversations
 - **Discord Server**: Real-time chat and voice conversations
 - **GitHub**: For technical discussions, issue tracking, and code contributions
 
 ### Specialized Channels
+
 - **Regional WhatsApp Groups**: For region-specific discussions
 - **Email Lists**: For announcements and important updates
 - **Social Media**: Twitter, LinkedIn for public engagement and updates
 
 ### Meeting Schedule
+
 - **Weekly**: Community sync call (Wednesdays, 7 PM IST)
 - **Bi-weekly**: Working group calls (various times)
 - **Monthly**: All-hands community meeting (first Saturday)
@@ -140,6 +159,7 @@ All complaints will be reviewed and investigated promptly and fairly. Confidenti
 ## Participation Guidelines
 
 ### How to Participate
+
 - Introduce yourself in the community forum
 - Read and follow the Code of Conduct
 - Start with small contributions to understand the community
@@ -148,12 +168,14 @@ All complaints will be reviewed and investigated promptly and fairly. Confidenti
 - Participate in community events and discussions
 
 ### Getting Help
+
 - Use the "New User" category in the forum for beginner questions
 - Join the weekly community sync for orientation
 - Find a mentor from experienced community members
 - Attend onboarding sessions
 
 ### Providing Help
+
 - Answer questions in the forum
 - Review contributions from new members
 - Share your expertise in your domain
@@ -164,29 +186,34 @@ All complaints will be reviewed and investigated promptly and fairly. Confidenti
 ## Community Roles
 
 ### Community Member
+
 - Anyone who participates in the community
 - Access to all public channels
 - Can participate in discussions and events
 
 ### Active Contributor
+
 - Regularly contributes to the project
 - Access to contributor channels
 - Eligible for recognition and rewards
 - Can propose new features or improvements
 
 ### Domain Expert
+
 - Recognized expertise in a specific area (nutrition, medicine, technology)
 - Higher-level responsibilities in their domain
 - Advanced access to tools and resources
 - Mentorship role for other contributors
 
 ### Community Leader
+
 - Elected by the community
 - Represents community in governance
 - Facilitates community processes
 - Acts as point of contact for external partnerships
 
 ### Regional Representative
+
 - Represents specific Indian regions
 - Ensures regional diversity in food data
 - Coordinates regional community engagement
@@ -197,18 +224,21 @@ All complaints will be reviewed and investigated promptly and fairly. Confidenti
 ## Decision Making Process
 
 ### Consensus-Based Decision Making
+
 - Open discussion on community forums
 - Consideration of all viewpoints
 - Strive for agreement among community members
 - Escalation to steering committee if needed
 
 ### Voting Process
+
 - For major decisions affecting the project
 - Weighted voting based on contribution history
 - 2/3 majority required for important decisions
 - 2-week voting period for significant changes
 
 ### Appeal Process
+
 - Decisions can be appealed to the steering committee
 - New information can trigger reconsideration
 - Appeals must be based on process or technical merit
@@ -218,18 +248,21 @@ All complaints will be reviewed and investigated promptly and fairly. Confidenti
 ## Conflict Resolution
 
 ### Direct Resolution
+
 - Address issues directly with the involved parties
 - Use "I" statements to express concerns
 - Focus on the issue, not the person
 - Seek mutual understanding and solutions
 
 ### Mediated Resolution
+
 - If direct resolution isn't possible, involve a neutral mediator
 - Community moderators trained in conflict resolution
 - Structured conversation to understand all perspectives
 - Focus on finding solutions that work for the community
 
 ### Escalation Process
+
 1. Direct conversation with involved parties
 2. Mediation by community moderators
 3. Review by domain leads
@@ -240,6 +273,7 @@ All complaints will be reviewed and investigated promptly and fairly. Confidenti
 ## Events and Meetups
 
 ### Community Events
+
 - **IndiByte Con**: Annual conference bringing together all contributors
 - **Regional Meetups**: Local gatherings in major cities
 - **Webinars**: Topic-specific educational sessions
@@ -247,12 +281,14 @@ All complaints will be reviewed and investigated promptly and fairly. Confidenti
 - **Hackathons**: Technical development events
 
 ### Online Events
+
 - **Community Office Hours**: Weekly Q&A with core team
 - **Domain Expert Talks**: Sessions with nutritionists, doctors, etc.
 - **Skill Share Sessions**: Members teaching skills to others
 - **Cultural Food Days**: Sharing regional food traditions
 
 ### Event Guidelines
+
 - All events follow Code of Conduct
 - Accessibility considerations (language, technology, physical)
 - Recording consent from participants
@@ -263,12 +299,14 @@ All complaints will be reviewed and investigated promptly and fairly. Confidenti
 ## Recognition and Rewards
 
 ### Recognition Programs
+
 - **Contributor of the Month**: Regular recognition for outstanding contributions
 - **Regional Ambassador**: Recognition for regional community building
 - **Data Quality Champion**: For accuracy and quality of contributions
 - **Community Helper**: For outstanding community support
 
 ### Reward System
+
 - **Digital Badges**: Displayable on profiles for various achievements
 - **Swag**: Branded merchandise for significant milestones
 - **Certificates**: Verified certificates for different contribution levels
@@ -276,6 +314,7 @@ All complaints will be reviewed and investigated promptly and fairly. Confidenti
 - **Networking**: Introduction to industry professionals
 
 ### Career Development
+
 - Recommendations for career advancement
 - Skill development opportunities
 - Mentorship programs
@@ -286,18 +325,21 @@ All complaints will be reviewed and investigated promptly and fairly. Confidenti
 ## Resources
 
 ### Learning Resources
+
 - **Documentation**: Comprehensive guides and tutorials
 - **Video Library**: Recorded sessions and tutorials
 - **Best Practices**: Community-driven best practice documents
 - **Case Studies**: Success stories and learnings from the community
 
 ### Support Resources
+
 - **Mentorship Program**: Pairing new members with experienced contributors
 - **Regional Groups**: Support from community members in your area
 - **Domain Experts**: Access to nutritionists, developers, and other experts
 - **Financial Support**: Limited support for community members in need
 
 ### Collaboration Tools
+
 - **Project Management**: GitHub, community forum for coordination
 - **Communication**: Discord, email lists for discussions
 - **Document Collaboration**: Shared documents for planning
@@ -308,6 +350,7 @@ All complaints will be reviewed and investigated promptly and fairly. Confidenti
 ## Joining the Community
 
 ### Steps to Get Involved
+
 1. **Register**: Create an account on community.indibyte.org
 2. **Introduce Yourself**: Share your background and interests in a welcome thread
 3. **Explore**: Look through different categories and find topics of interest
@@ -317,6 +360,7 @@ All complaints will be reviewed and investigated promptly and fairly. Confidenti
 7. **Grow**: Take on more responsibilities as you get comfortable
 
 ### Onboarding Process
+
 - **Welcome Package**: Email with essential information
 - **First Week**: Introduction to tools, resources, and community
 - **First Month**: Mentoring and guidance for new contributors
@@ -338,11 +382,13 @@ We continuously strive to improve our community experience. Your feedback is val
 ## Getting Help
 
 ### Immediate Help
+
 - **Community Moderators**: Available on Discord for urgent matters
-- **Email**: community@indibyte.org for non-urgent matters
+- **Email**: <community@indibyte.org> for non-urgent matters
 - **Emergency**: Use emergency contact information for urgent concerns
 
 ### Escalation Path
+
 - Moderators → Domain Leads → Steering Committee → External Mediation
 
 ---
