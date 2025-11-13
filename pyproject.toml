@@ -4,4 +4,18 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "aiofiles>=25.1.0",
+    "chandra-ocr>=0.1.7",
+    "dspy-ai>=3.0.4",
+    "fastapi>=0.121.2",
+    "fastmcp>=2.13.0.2",
+    "httpx>=0.28.1",
+    "langchain>=1.0.5",
+    "opencv-python-headless>=4.12.0.88",
+    "pillow>=12.0.0",
+    "pydantic>=2.12.4",
+    "python-dotenv>=1.2.1",
+    "python-multipart>=0.0.20",
+    "ruff>=0.14.4",
+]
