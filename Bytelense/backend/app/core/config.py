@@ -25,8 +25,8 @@ class Settings(BaseSettings):
     ollama_model: str = "qwen3:30b"  # or deepseek-r1:8b, qwen3:8b
 
     # SearXNG Configuration
-    searxng_url: str = "http://192.168.1.4"
-    searxng_api_base: str = "http://192.168.1.4"
+    searxng_url: str = "http://192.168.1.4:8080"
+    searxng_api_base: str = "http://192.168.1.4:8080"
 
     # Storage
     profiles_dir: str = "./data/profiles"

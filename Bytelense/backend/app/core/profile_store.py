@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Optional, Dict, Any
 import aiofiles
 
-from app.models.schemas import UserProfile, DailyTargets, OnboardingRequest
+from app.models.schemas import EnhancedUserProfile, DailyTargets, OnboardingRequest
 from app.core.config import settings
 
 logger = logging.getLogger(__name__)
@@ -33,7 +33,7 @@ class ProfileStore:
         profile_path = self._get_profile_path(name)
         return profile_path.exists()
 
-    async def load(self, name: str) -> Optional[UserProfile]:
+    async def load(self, name: str) -> Optional[EnhancedUserProfile]:
         """Load a user profile from JSON file."""
         profile_path = self._get_profile_path(name)
 
@@ -50,7 +50,7 @@ class ProfileStore:
             data["created_at"] = datetime.fromisoformat(data["created_at"])
             data["updated_at"] = datetime.fromisoformat(data["updated_at"])
 
-            profile = UserProfile(**data)
+            profile = EnhancedUserProfile(**data)
             logger.info(f"Loaded profile: {name}")
             return profile
 
@@ -58,7 +58,7 @@ class ProfileStore:
             logger.error(f"Error loading profile {name}: {e}")
             return None
 
-    async def create(self, onboarding_data: OnboardingRequest) -> UserProfile:
+    async def create(self, onboarding_data: OnboardingRequest) -> EnhancedUserProfile:
         """Create a new user profile."""
         profile_path = self._get_profile_path(onboarding_data.name)
 
@@ -76,7 +76,7 @@ class ProfileStore:
 
         # Create profile
         now = datetime.now()
-        profile = UserProfile(
+        profile = EnhancedUserProfile(
             name=onboarding_data.name,
             created_at=now,
             updated_at=now,
@@ -95,7 +95,7 @@ class ProfileStore:
         logger.info(f"Created profile: {onboarding_data.name}")
         return profile
 
-    async def save(self, profile: UserProfile) -> None:
+    async def save(self, profile: EnhancedUserProfile) -> None:
         """Save a profile to JSON file."""
         profile_path = self._get_profile_path(profile.name)
 
@@ -119,7 +119,7 @@ class ProfileStore:
             logger.error(f"Error saving profile {profile.name}: {e}")
             raise
 
-    async def update(self, name: str, updates: Dict[str, Any]) -> UserProfile:
+    async def update(self, name: str, updates: Dict[str, Any]) -> EnhancedUserProfile:
         """Update an existing profile (partial update)."""
         profile = await self.load(name)
 
