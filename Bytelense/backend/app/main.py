@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import socketio
 
 from app.core.config import settings
-from app.core.searxng_keepalive import init_keepalive, shutdown_keepalive
+from app.services.searxng_keepalive import init_keepalive, shutdown_keepalive
 
 # Configure logging
 logging.basicConfig(
@@ -182,9 +182,10 @@ async def get_config():
 # Import routers and WebSocket handlers
 # Use scan_simple for initial testing (no LLM/OCR dependencies)
 # Switch to 'scan' for full pipeline
-from app.api import auth, scan_simple  # noqa: F401 - scan_simple registers SocketIO events
+from app.api import auth, scan_simple, label_processing  # noqa: F401 - scan_simple registers SocketIO events
 
 app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
+app.include_router(label_processing.router)
 
 
 if __name__ == "__main__":

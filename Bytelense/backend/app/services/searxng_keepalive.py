@@ -37,7 +37,7 @@ class SearXNGKeepAlive:
         Returns:
             True if ping successful, False otherwise
         """
-        test_words= ["JC_BOSE","mcp","Fastapi"]
+        test_words = ["JC_BOSE", "mcp", "Fastapi"]
         try:
             async with httpx.AsyncClient(timeout=10.0) as client:
                 response = await client.get(

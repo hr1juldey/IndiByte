@@ -100,25 +100,35 @@ export async function preprocessImage(
     let src = cv.imread(canvas);
     steps.push('Created OpenCV matrix');
 
-    // Step 1: Color channel extraction (better for colored text)
+    // Step 1: Color channel extraction for red text on yellow background
     let gray = new cv.Mat();
 
-    // For colored text on colored background, use channel separation
-    // Extract individual channels and find the one with best contrast
-    const channels = new cv.MatVector();
-    cv.split(src, channels);
+    // Convert RGBA to RGB first
+    let rgb = new cv.Mat();
+    cv.cvtColor(src, rgb, cv.COLOR_RGBA2RGB);
 
-    // Try blue channel (often best for red/yellow text)
-    const blue = channels.get(2);  // B channel from RGBA
-    gray = blue.clone();
+    // Split into R, G, B channels
+    const channels = new cv.MatVector();
+    cv.split(rgb, channels);
+
+    // For red text on yellow background:
+    // - Red text: High R, Low G, Low B
+    // - Yellow bg: High R, High G, Low B
+    // Green channel gives best contrast (red text is dark, yellow bg is bright)
+    const greenChannel = channels.get(1);  // G channel
+    gray = greenChannel.clone();
+
+    // Invert to make text white on black background (better for OCR)
+    cv.bitwise_not(gray, gray);
 
     // Clean up
     for (let i = 0; i < channels.size(); i++) {
       channels.get(i).delete();
     }
     channels.delete();
+    rgb.delete();
 
-    steps.push('Extracted blue channel (for colored text)');
+    steps.push('Extracted green channel and inverted (red text on yellow bg)');
 
     // Step 2: Scale up for better small text recognition
     let resized = new cv.Mat();
@@ -128,24 +138,18 @@ export async function preprocessImage(
     steps.push(`Scaled to ${newWidth}x${newHeight} (${scaleFactor}x = ${(scaleFactor * 100).toFixed(0)}%)`);
     gray.delete();
 
-    // Step 3: Denoise with Bilateral Filter (preserves edges better than Gaussian)
+    // Step 3: Light denoising (don't blur text edges)
     let denoised = new cv.Mat();
     if (denoise) {
-      if (useBilateral) {
-        // Bilateral filter: preserves edges while removing noise
-        // Parameters: d=5, sigmaColor=75, sigmaSpace=75
-        cv.bilateralFilter(resized, denoised, 5, 75, 75);
-        steps.push('Applied bilateral filtering (edge-preserving denoising)');
-      } else {
-        cv.GaussianBlur(resized, denoised, new cv.Size(3, 3), 0);
-        steps.push('Applied Gaussian blur denoising');
-      }
+      // Very light Gaussian blur to reduce noise without blurring text
+      cv.GaussianBlur(resized, denoised, new cv.Size(3, 3), 0);
+      steps.push('Applied light Gaussian blur');
       resized.delete();
     } else {
       denoised = resized;
     }
 
-    // Step 4: Adaptive Thresholding (CRITICAL for uneven lighting)
+    // Step 4: Adaptive Thresholding for text extraction
     let thresholded = new cv.Mat();
     if (adaptiveThreshold) {
       cv.adaptiveThreshold(
@@ -154,27 +158,24 @@ export async function preprocessImage(
         255,
         cv.ADAPTIVE_THRESH_GAUSSIAN_C,
         cv.THRESH_BINARY,
-        31,  // Block size (balanced for colored backgrounds)
-        2    // Constant (lower to avoid washing out)
+        11,  // Smaller block size for sharper text edges
+        2    // Constant
       );
-      steps.push('Applied adaptive thresholding (block=31, C=2 for colored text)');
+      steps.push('Applied adaptive thresholding (block=11, C=2)');
       denoised.delete();
     } else {
       thresholded = denoised;
     }
 
-    // Step 5: Morphological Operations (remove small noise, enhance text)
+    // Step 5: Light morphological operations to clean up
     let morphed = new cv.Mat();
     if (morphology) {
-      const kernel = cv.getStructuringElement(cv.MORPH_RECT, new cv.Size(1, 1));
+      const kernel = cv.getStructuringElement(cv.MORPH_RECT, new cv.Size(2, 2));
 
-      // Opening: erosion followed by dilation (removes small white noise)
-      cv.morphologyEx(thresholded, morphed, cv.MORPH_OPEN, kernel);
+      // Light closing to connect broken text
+      cv.morphologyEx(thresholded, morphed, cv.MORPH_CLOSE, kernel);
 
-      // Closing: dilation followed by erosion (fills small black holes)
-      cv.morphologyEx(morphed, morphed, cv.MORPH_CLOSE, kernel);
-
-      steps.push('Applied morphological operations (opening + closing)');
+      steps.push('Applied light morphological closing');
       kernel.delete();
       thresholded.delete();
     } else {
@@ -245,16 +246,16 @@ export async function preprocessImageQuick(imageData: string): Promise<string> {
 }
 
 /**
- * Full preprocessing for final OCR submission (max quality for small text)
+ * Full preprocessing for final OCR submission (optimized for colored text)
  */
 export async function preprocessImageFull(imageData: string): Promise<PreprocessingResult> {
   return preprocessImage(imageData, {
-    scaleFactor: 3.0,      // 300% scaling for very small text on labels
+    scaleFactor: 2.5,      // 250% scaling for good quality without over-processing
     denoise: true,
-    useBilateral: true,    // Edge-preserving denoising
+    useBilateral: false,   // Use light Gaussian instead
     adaptiveThreshold: true,
     morphology: true,
-    sharpen: true,         // Enable strong sharpening
+    sharpen: false,        // Skip sharpening - already have good edges from channel extraction
     debug: true
   });
 }
