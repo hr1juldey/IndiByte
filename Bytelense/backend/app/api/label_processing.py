@@ -19,7 +19,8 @@ from PIL import Image
 
 from app.services.label_processing import LabelProcessor
 from chandra.model import InferenceManager
-from chandra.model.schema import BatchInputItem
+from chandra.model.schema import BatchInputItem, BatchOutputItem
+from app.services.ocr_single_image import SingleImageOCRManager
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/label", tags=["label-processing"])
@@ -27,6 +28,7 @@ router = APIRouter(prefix="/api/label", tags=["label-processing"])
 # Global processor instances
 _processor: LabelProcessor = None
 _ocr_manager: InferenceManager = None
+_single_ocr_manager: SingleImageOCRManager = None
 
 
 def get_processor() -> LabelProcessor:
@@ -49,6 +51,20 @@ def get_ocr_manager() -> InferenceManager:
             logger.error(f"Failed to initialize ChandraOCR: {e}")
             raise
     return _ocr_manager
+
+
+def get_single_ocr_manager() -> SingleImageOCRManager:
+    """Get or create single image OCR manager instance."""
+    global _single_ocr_manager
+    if _single_ocr_manager is None:
+        try:
+            logger.info("Initializing Single Image ChandraOCR...")
+            _single_ocr_manager = SingleImageOCRManager()
+            logger.info("Single Image ChandraOCR initialized successfully")
+        except Exception as e:
+            logger.error(f"Failed to initialize Single Image ChandraOCR: {e}")
+            raise
+    return _single_ocr_manager
 
 
 # ==================== Request/Response Models ====================
@@ -375,45 +391,98 @@ async def process_label_with_ocr(request: LabelProcessRequest) -> LabelProcessWi
         ocr_img_rgb = cv2.cvtColor(ocr_img_bgr, cv2.COLOR_BGR2RGB)
         pil_img = Image.fromarray(ocr_img_rgb)
 
-        # Run OCR
-        logger.info("Starting ChandraOCR...")
+        # Run OCR using memory-efficient single image processing
+        logger.info("Starting ChandraOCR with single-image processing...")
         ocr_start = time.time()
 
         try:
-            ocr_manager = get_ocr_manager()
-            batch_input = [BatchInputItem(image=pil_img, prompt=None, prompt_type=None)]
-            batch_output = ocr_manager.generate(batch_input)
+            # Use the single image OCR manager which is more memory-efficient
+            single_ocr_manager = get_single_ocr_manager()
+
+            # Process single image directly
+            ocr_output = single_ocr_manager.process_single_image(
+                image=pil_img,
+                prompt_type="ocr"
+            )
+
             ocr_time = (time.time() - ocr_start) * 1000
 
-            if batch_output and len(batch_output) > 0:
-                ocr_out = batch_output[0]
+            if not ocr_output.error:
+                # Create a mock BatchOutputItem-like structure from the single result
+                from chandra.output import parse_markdown, parse_html, parse_chunks, extract_images
+
+                chunks = parse_chunks(ocr_output.raw, pil_img)
+                images = extract_images(ocr_output.raw, chunks, pil_img)
+
                 ocr_result = OCRResult(
-                    markdown=ocr_out.markdown,
-                    html=ocr_out.html,
-                    raw=ocr_out.raw,
-                    token_count=ocr_out.token_count,
-                    error=ocr_out.error,
-                    chunks=ocr_out.chunks if ocr_out.chunks else {},
-                    images=ocr_out.images if ocr_out.images else {},
+                    markdown=parse_markdown(ocr_output.raw),
+                    html=parse_html(ocr_output.raw),
+                    raw=ocr_output.raw,
+                    token_count=ocr_output.token_count,
+                    error=ocr_output.error,
+                    chunks=chunks if chunks else {},
+                    images=images if images else {},
                 )
                 logger.info(
-                    f"OCR complete: tokens={ocr_out.token_count}, error={ocr_out.error}, time={ocr_time:.0f}ms"
+                    f"OCR complete: tokens={ocr_output.token_count}, error={ocr_output.error}, time={ocr_time:.0f}ms"
                 )
             else:
-                raise Exception("OCR returned empty output")
+                raise Exception("OCR processing failed - error flag set")
 
         except Exception as ocr_error:
-            logger.error(f"OCR processing failed: {ocr_error}", exc_info=True)
-            ocr_result = OCRResult(
-                markdown="",
-                html="",
-                raw="",
-                token_count=0,
-                error=True,
-                chunks={},
-                images={},
-            )
-            ocr_time = (time.time() - ocr_start) * 1000
+            logger.error(f"Single-image OCR processing failed: {ocr_error}", exc_info=True)
+            logger.info("Falling back to original batch OCR processing...")
+
+            # Clear CUDA cache to free memory before fallback
+            try:
+                import torch
+                torch.cuda.empty_cache()
+            except:
+                pass  # torch may not be available
+
+            # Fallback to original batch processing method
+            try:
+                ocr_manager = get_ocr_manager()
+                batch_input = [BatchInputItem(image=pil_img, prompt=None, prompt_type="ocr")]
+                batch_output = ocr_manager.generate(batch_input)
+                ocr_time = (time.time() - ocr_start) * 1000
+
+                if batch_output and len(batch_output) > 0:
+                    ocr_out = batch_output[0]
+                    ocr_result = OCRResult(
+                        markdown=ocr_out.markdown,
+                        html=ocr_out.html,
+                        raw=ocr_out.raw,
+                        token_count=ocr_out.token_count,
+                        error=ocr_out.error,
+                        chunks=ocr_out.chunks if ocr_out.chunks else {},
+                        images=ocr_out.images if ocr_out.images else {},
+                    )
+                    logger.info(
+                        f"Fallback OCR complete: tokens={ocr_out.token_count}, error={ocr_out.error}, time={ocr_time:.0f}ms"
+                    )
+                else:
+                    raise Exception("Fallback OCR returned empty output")
+
+            except Exception as fallback_error:
+                logger.error(f"Fallback OCR processing also failed: {fallback_error}", exc_info=True)
+                # Clear CUDA cache again
+                try:
+                    import torch
+                    torch.cuda.empty_cache()
+                except:
+                    pass  # torch may not be available
+
+                ocr_result = OCRResult(
+                    markdown="",
+                    html="",
+                    raw="",
+                    token_count=0,
+                    error=True,
+                    chunks={},
+                    images={},
+                )
+                ocr_time = (time.time() - ocr_start) * 1000
 
         # Quality analysis response
         quality_response = QualityAnalysisResponse(

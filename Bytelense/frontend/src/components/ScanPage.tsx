@@ -114,7 +114,7 @@ export function ScanPage() {
           setScanState('scanning');
           console.log('Sending burst-processed image to OCR endpoint...');
 
-          const response = await fetch('http://localhost:8002/api/label/process-with-ocr', {
+          const response = await fetch('http://localhost:8000/api/label/process-with-ocr', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -127,7 +127,7 @@ export function ScanPage() {
                 timestamp: Date.now(),
                 capture_method: 'burst_fusion',
                 burst_frame_count: burstProcessorRef.current['burstFrames'].length,
-                processing_time_ms: processingTime,
+                processing_time_ms: processingTime,  // This was the variable calculated earlier
                 original_resolution: `${videoRef.current.videoWidth}x${videoRef.current.videoHeight}`,
                 device_orientation: screen.orientation?.angle || window.orientation || 0
               }
@@ -185,7 +185,7 @@ export function ScanPage() {
             setScanState('scanning');
             console.log('Sending high-quality single frame to OCR endpoint...');
 
-            const response = await fetch('http://localhost:8002/api/label/process-with-ocr', {
+            const response = await fetch('http://localhost:8000/api/label/process-with-ocr', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
