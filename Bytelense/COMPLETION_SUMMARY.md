@@ -18,11 +18,13 @@ Successfully implemented **complete two-stage image processing pipeline** for OC
 ### OCR Integration
 
 #### 1. ChandraOCR Endpoint (`app/api/label_processing.py`)
+
 New endpoint for complete food label processing with text extraction:
 
 **Endpoint:** `POST /api/label/process-with-ocr`
 
 **Features:**
+
 - Full image enhancement pipeline (adaptive quality-based)
 - ChandraOCR text extraction (markdown/HTML/JSON output)
 - Layout preservation and structured text chunks
@@ -30,6 +32,7 @@ New endpoint for complete food label processing with text extraction:
 - Error handling with graceful fallbacks
 
 **Outputs:**
+
 - Enhanced image (base64 JPEG)
 - Quality analysis (sharpness, exposure, saturation)
 - OCR text in markdown format (semantic structure)
@@ -38,13 +41,15 @@ New endpoint for complete food label processing with text extraction:
 - Token count and processing times
 
 **Latency Profile:**
-```
+
+```bash
 Image enhancement:  100-1200ms  (depends on quality tier)
 ChandraOCR model:   3000-5000ms (GPU accelerated)
 Total E2E:          ~4-6 seconds (typical)
 ```
 
 **Response Model:**
+
 ```python
 {
   "status": "success",
@@ -71,6 +76,7 @@ Total E2E:          ~4-6 seconds (typical)
 ### Backend Services
 
 #### 1. LabelProcessor (`app/services/label_processing.py`)
+
 Adaptive image processing with 3 quality-based pipelines:
 
 | Quality | Pipeline | Time | Stages |
@@ -80,6 +86,7 @@ Adaptive image processing with 3 quality-based pipelines:
 | Poor | Heavy | ~1200ms | 6 |
 
 **Features:**
+
 - Quality analysis (sharpness, exposure, saturation)
 - Perspective correction (edge detection + homography)
 - Glare removal (LAB inpainting)
@@ -89,11 +96,12 @@ Adaptive image processing with 3 quality-based pipelines:
 - Optional super-resolution
 
 #### 2. SearXNG Keep-Alive (`app/services/searxng_keepalive.py`)
+
 Moved from `core/` to `services/` for consistency. Keeps Docker container awake.
 
 ### API Endpoints
 
-```
+```bash
 POST   /api/label/process              Full image processing + metrics
 POST   /api/label/process-with-ocr     Image processing + ChandraOCR text extraction ✅ NEW
 POST   /api/label/analyze-quality      Quality analysis only
@@ -127,7 +135,8 @@ const { canvas: fused, timings } = await processor.processBurst();
 ## Performance Metrics
 
 ### Frontend (Browser)
-```
+
+```bash
 Burst capture:    150ms
 Alignment:        100-150ms
 Fusion:           200-300ms
@@ -138,20 +147,23 @@ Total:            ~500ms ✅
 ```
 
 ### Backend (Server)
-```
+
+```bash
 Good quality:     ~150ms (light pipeline)
 Fair quality:     ~600ms (medium pipeline)
 Poor quality:     ~1200ms (heavy pipeline)
 ```
 
 ### Network (WiFi)
-```
+
+```bash
 Upload:           100-200ms
 Download:         50-150ms
 ```
 
 ### End-to-End
-```
+
+```bash
 User perceives:   < 500ms (preview shows immediately)
 Full processing:  ~1.1s (acceptable)
 ```
@@ -161,6 +173,7 @@ Full processing:  ~1.1s (acceptable)
 ## Testing Framework
 
 ### Test Coverage
+
 - **8 test classes**
 - **20+ test cases**
 - **Quality analysis tests** - Sharpness, exposure, saturation
@@ -170,6 +183,7 @@ Full processing:  ~1.1s (acceptable)
 - **Synthetic test data** - Automatic image generation
 
 ### Running Tests
+
 ```bash
 # All tests
 pytest backend/tests/test_label_processing.py -v
@@ -186,7 +200,8 @@ pytest backend/tests/test_label_processing.py --cov=app.services.label_processin
 ## Key Design Features
 
 ### 1. Adaptive Quality Detection
-```
+
+```bash
 Good:   sharpness > 100 AND exposure > 0.7 AND saturation > 0.3
 Fair:   sharpness > 60 AND exposure > 0.5
 Poor:   everything else
@@ -195,7 +210,8 @@ Poor:   everything else
 Automatically selects processing intensity. Balances quality vs. latency.
 
 ### 2. Color-Aware Processing
-```
+
+```bash
 Yellow → clip_limit=2.5  (red-on-yellow boost)
 White  → clip_limit=2.0  (already good contrast)
 Blue   → clip_limit=2.5  (yellow-on-blue boost)
@@ -206,7 +222,9 @@ Green  → clip_limit=2.2  (balanced)
 Handles unpredictable label colors automatically.
 
 ### 3. Intelligent Burst Fusion
+
 **Three Weight Maps:**
+
 - **Contrast:** Laplacian variance (favors text regions)
 - **Saturation:** Per-pixel color spread (preserves colors)
 - **Exposure:** Gaussian centered at 0.5 (avoids extremes)
@@ -214,13 +232,15 @@ Handles unpredictable label colors automatically.
 Result: Combined weight = contrast × saturation × exposure
 
 **Benefits:**
+
 - Deblurs hand tremor
 - Reduces sensor noise (multi-frame)
 - Removes glare (exposure weighting)
 - Preserves text colors
 
 ### 4. Graceful Fallbacks
-```
+
+```bash
 Perspective correction fails  → use original
 Inpainting fails             → continue without
 SR model unavailable         → use bicubic
@@ -233,7 +253,7 @@ Always produces output, degrades gracefully.
 
 ## Architecture
 
-```
+```bash
 Browser Camera
     ↓ (30 fps live)
 BurstCaptureProcessor
@@ -261,18 +281,22 @@ LabelProcessor
 ## Files Summary
 
 ### Backend
+
 - `app/services/label_processing.py` (600+ lines) ✅
 - `app/services/searxng_keepalive.py` (moved) ✅
 - `app/api/label_processing.py` (500+ lines) ✅ **Updated with OCR endpoint**
 - `app/main.py` (imports updated) ✅
 
 ### Frontend
+
 - `frontend/src/lib/burstCapture.ts` (450+ lines) ✅
 
 ### Testing
+
 - `backend/tests/test_label_processing.py` (400+ lines) ✅
 
 ### Documentation
+
 - `COMPREHENSIVE_IMAGE_PROCESSING_PLAN.md` (2000+ lines)
 - `BACKEND_SERVICE_IMPLEMENTATION.md`
 - `BACKEND_QUICK_START.md`
@@ -297,6 +321,7 @@ LabelProcessor
 ## API Usage Examples
 
 ### Process Image
+
 ```bash
 curl -X POST https://192.168.1.4:8443/api/label/process \
   -H "Content-Type: application/json" \
@@ -307,6 +332,7 @@ curl -X POST https://192.168.1.4:8443/api/label/process \
 ```
 
 ### Response
+
 ```json
 {
   "status": "success",
@@ -323,6 +349,7 @@ curl -X POST https://192.168.1.4:8443/api/label/process \
 ```
 
 ### JavaScript
+
 ```javascript
 const response = await fetch('https://192.168.1.4:8443/api/label/process', {
   method: 'POST',
@@ -343,17 +370,20 @@ console.log('Time:', result.total_processing_ms + 'ms');
 ## Ready for Next Phase
 
 ### Immediate (Next Step)
+
 - [x] Integrate ChandraOCR ✅
 - [x] Create `/api/label/process-with-ocr` endpoint ✅
 - [x] Return OCR results + markdown/HTML output ✅
 
 ### Short Term
+
 - [ ] Update ScanPage.tsx to use BurstCaptureProcessor + OCR
 - [ ] Test OCR with real food label dataset (20-50 images)
 - [ ] Add WebSocket progress events for long-running OCR
 - [ ] Create nutrition facts parser from OCR output
 
 ### Testing
+
 - [ ] Test with 50+ real food label images
 - [ ] Verify OCR accuracy > 85%
 - [ ] Performance profiling on mobile
@@ -378,6 +408,7 @@ console.log('Time:', result.total_processing_ms + 'ms');
 ## Running the System
 
 ### Start Services
+
 ```bash
 # Terminal 1: Frontend
 cd frontend
@@ -394,6 +425,7 @@ python -m uvicorn app.main:socket_app --host 0.0.0.0 --port 8000
 ```
 
 ### Test Processing
+
 ```bash
 # Quality analysis
 curl -X POST https://192.168.1.4:8443/api/label/analyze-quality \
@@ -464,7 +496,9 @@ pytest backend/tests/test_label_processing.py -v
 **Ready for production testing with real food label dataset.**
 
 ### Next Priority
+
 Test the full end-to-end pipeline with real food label images (20-50 images) to validate:
+
 - OCR accuracy > 85%
 - Processing time acceptable on typical hardware
 - Error handling robust for various label types and conditions

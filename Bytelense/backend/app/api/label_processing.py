@@ -207,7 +207,7 @@ async def process_label_image(request: LabelProcessRequest) -> LabelProcessRespo
 
         # Quality analysis response
         quality_response = QualityAnalysisResponse(
-            quality_tier=result.quality_analysis.quality_tier.value,
+            quality_tier=result.quality_analysis.quality_tier,
             sharpness=float(result.quality_analysis.sharpness),
             exposure_score=float(result.quality_analysis.exposure_score),
             saturation_mean=float(result.quality_analysis.saturation_mean),
@@ -269,7 +269,7 @@ async def analyze_quality(request: LabelProcessRequest) -> QualityAnalysisRespon
         quality = processor.analyze_quality(img)
 
         return QualityAnalysisResponse(
-            quality_tier=quality.quality_tier.value,
+            quality_tier=quality.quality_tier,
             sharpness=float(quality.sharpness),
             exposure_score=float(quality.exposure_score),
             saturation_mean=float(quality.saturation_mean),
@@ -311,7 +311,7 @@ async def test_with_file(file: UploadFile = File(...)):
         return {
             "status": "success",
             "enhanced_image_base64": enhanced_b64,
-            "quality_tier": result.quality_analysis.quality_tier.value,
+            "quality_tier": result.quality_analysis.quality_tier,
             "stages": result.stages_applied,
             "timings_ms": result.timings,
         }
@@ -363,7 +363,7 @@ async def process_label_with_ocr(request: LabelProcessRequest) -> LabelProcessWi
         img_time = (time.time() - img_start) * 1000
 
         logger.info(
-            f"Image processing complete: quality={result.quality_analysis.quality_tier.value}, "
+            f"Image processing complete: quality={result.quality_analysis.quality_tier}, "
             f"stages={len(result.stages_applied)}, time={img_time:.0f}ms"
         )
 
@@ -417,7 +417,7 @@ async def process_label_with_ocr(request: LabelProcessRequest) -> LabelProcessWi
 
         # Quality analysis response
         quality_response = QualityAnalysisResponse(
-            quality_tier=result.quality_analysis.quality_tier.value,
+            quality_tier=result.quality_analysis.quality_tier,
             sharpness=float(result.quality_analysis.sharpness),
             exposure_score=float(result.quality_analysis.exposure_score),
             saturation_mean=float(result.quality_analysis.saturation_mean),

@@ -1,0 +1,222 @@
+{
+  "summary": {
+    "total_images": 26,
+    "successful": 26,
+    "failed": 0,
+    "success_rate": 100.0,
+    "average_processing_time": 0.03964314093956581,
+    "total_tokens_extracted": 0,
+    "average_tokens_per_success": 0.0,
+    "meets_target": true
+  },
+  "detailed_results": [
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.005855083465576172,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.00493168830871582,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.003932952880859375,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.0038461685180664062,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.0036454200744628906,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.0043256282806396484,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.004015207290649414,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.0038521289825439453,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.005709171295166016,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.004354000091552734,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.004191160202026367,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.0041506290435791016,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.0038917064666748047,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.004077911376953125,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.0042989253997802734,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.004647016525268555,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.0040776729583740234,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.004766225814819336,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.004422903060913086,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.4932582378387451,
+      "token_count": 0,
+      "quality_tier": "fair",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.004686832427978516,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.004197835922241211,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.004238605499267578,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.00397801399230957,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.3925020694732666,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    },
+    {
+      "image": "unknown",
+      "success": true,
+      "processing_time": 0.04486846923828125,
+      "token_count": 0,
+      "quality_tier": "good",
+      "has_error": true
+    }
+  ]
+}
