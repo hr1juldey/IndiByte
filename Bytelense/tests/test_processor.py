@@ -9,7 +9,7 @@ import dspy
 
 def main():
     # Test with the required image path
-    image_path = "/home/riju279/Documents/Projects/IndiByte/IndiByte/Bytelense/data/food_labels/test_ocr_clean.jpeg"
+    image_path = "/home/riju279/Documents/Projects/IndiByte/IndiByte/Bytelense/data/food_labels/test_ocr.jpeg"
 
     if not os.path.exists(image_path):
         print(f"❌ Image file not found: {image_path}")

@@ -15,8 +15,8 @@ import re
 from typing import Dict, Any, List
 import os
 
-# MODEL="qwen3-vl:8b"
-MODEL = "qwen2.5vl:7b"
+MODEL="qwen3-vl:8b"
+# MODEL = "qwen2.5vl:7b"
 
 def encode_image_to_base64(image_path: str) -> str:
     """Convert an image file to a base64-encoded string."""
@@ -329,7 +329,7 @@ class FoodLabelProcessor:
         try:
             if debug:
                 print("Debug: Starting OCR extraction...")
-            result = classify(image_1=dspy.Image(image_url, download=True))
+            result = classify(image_1=dspy.Image(url= image_url, download=True))
             if debug:
                 print("Debug: OCR extraction completed.")
         except Exception as e:

@@ -33,7 +33,7 @@ class Formatter(dspy.Signature):
         desc="Well-formatted Markdown output."
     )
 
-image_url = "/home/riju279/Documents/Projects/IndiByte/IndiByte/Bytelense/data/food_labels/test_clean.jpeg"
+image_url = "/home/riju279/Documents/Projects/IndiByte/IndiByte/Bytelense/data/food_labels/test_ocr.jpeg"
 classify = dspy.ChainOfThought(Scanner)
 result = classify(image_1=dspy.Image(image_url, download = True))
 # print("Result object:", result)
