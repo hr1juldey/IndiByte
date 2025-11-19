@@ -369,10 +369,20 @@ class MedicalNutritionAgent(dspy.Module):
     
     def forward(self, food_name: str, portion: str, medical_condition: str = "none"):
         """Main forward method that orchestrates everything"""
-        # Fetch from all sources with fallback chain
+        # Fetch from all sources with INVERTED lookup order
+        # KB-first architecture: Domain KB (accurate for common foods) → API sources (for unknowns) → Validate
         raw_sources = []
 
-        # Try OpenFoodFacts (primary source)
+        # Try Domain KB FIRST (more accurate for common foods, prevents wrong product selection)
+        print(f"  Querying Domain KB for: {food_name}")
+        domain_data = self._query_domain_kb(food_name)
+        if domain_data and any(v is not None for v in domain_data.values()):
+            raw_sources.append(("DomainKB", domain_data))
+            print(f"    Domain KB: Found data (using KB-first architecture)")
+        else:
+            print(f"    Domain KB: No data found, will try API sources")
+
+        # Try OpenFoodFacts (secondary source - for rare foods not in KB)
         print(f"  Querying OpenFoodFacts for: {food_name}")
         off_data = self._query_openfoodfacts(food_name, portion)
         if off_data and any(v is not None for v in off_data.values()):  # Check for actual data
@@ -381,7 +391,7 @@ class MedicalNutritionAgent(dspy.Module):
         else:
             print(f"    OpenFoodFacts: No data found")
 
-        # Try SearXNG (secondary source)
+        # Try SearXNG (tertiary source - last resort for web search)
         print(f"  Querying SearXNG for: {food_name}")
         searxng_data = self._query_searxng(food_name)
         if searxng_data:
@@ -389,12 +399,6 @@ class MedicalNutritionAgent(dspy.Module):
             print(f"    SearXNG: Found data")
         else:
             print(f"    SearXNG: No data found")
-
-        # Always try domain knowledge base (fallback)
-        print(f"  Querying Domain KB for: {food_name}")
-        domain_data = self._query_domain_kb(food_name)
-        raw_sources.append(("DomainKB", domain_data))  # Always add domain KB as fallback
-        print(f"    Domain KB: Data added")
 
         # Translate responses to standard format
         translated_sources = []

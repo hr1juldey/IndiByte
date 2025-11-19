@@ -1,4 +1,5 @@
 # Instructions for Qwen V2: Implement Medical Nutrition Agentic System
+
 ## Critical Fixes for Production Readiness
 
 **Document Version**: V2.0 (2025-11-20)
@@ -10,6 +11,7 @@
 ## EXECUTIVE SUMMARY: WHAT WENT WRONG IN V1
 
 ### V1 Implementation Status
+
 ✅ Translation layers created
 ✅ Agent modules implemented
 ✅ Integration with test_pot.py completed
@@ -18,6 +20,7 @@
 ❌ **CRITICAL FAILURE**: No actual API retrieval happening
 
 ### Real-World Test Results
+
 ```
 Input: "rohu fish 60 gram piece with vegetable soup"
 Output: Food name: None, Portion: None → CRASH
@@ -61,7 +64,8 @@ Total Calories Calculated: 1 (should be ~1500)
 ## CRITICAL RESEARCH FINDINGS FROM DSPY.AI
 
 ### Finding 1: Module Invocation Pattern
-**Source**: https://dspy.ai/api/modules/Module/
+
+**Source**: <https://dspy.ai/api/modules/Module/>
 
 ```python
 # ❌ WRONG (V1 pattern - causes warning)
@@ -72,13 +76,15 @@ result = agent(input=data)
 ```
 
 **Why it matters**: Direct `.forward()` bypasses:
+
 - Callback execution
 - Usage tracking
 - Module context management
 - Compilation infrastructure
 
 ### Finding 2: Assertions for Output Validation
-**Source**: https://dspy.ai/learn/programming/7-assertions/
+
+**Source**: <https://dspy.ai/learn/programming/7-assertions/>
 
 ```python
 # Add to signatures that must not return None
@@ -98,20 +104,23 @@ def forward(self, food_description: str):
 **Activation Required**: Must call `program.activate_assertions()` or wrap with `assert_transform_module`
 
 ### Finding 3: Temperature Strategy
-**Source**: https://dspy.ai/cheatsheet/
+
+**Source**: <https://dspy.ai/cheatsheet/>
 
 - **temperature=0.0**: Deterministic routing, extraction, classification
 - **temperature > 0**: Creative generation, reasoning, inference
 - **Cache bypass**: Use unique `rollout_id` with non-zero temperature
 
 **V2 Strategy**:
+
 - PortionExtractor: temperature=0.0 (extraction task)
 - DataQualityAssessment: temperature=0.0 (routing task)
 - DeepInferenceAgent: temperature=0.5 (creative reasoning)
 - MedicalAdapter: temperature=0.3 (balanced medical advice)
 
 ### Finding 4: Prediction Access Patterns
-**Source**: https://dspy.ai/api/primitives/Prediction/
+
+**Source**: <https://dspy.ai/api/primitives/Prediction/>
 
 ```python
 # ✅ SAFE: Use .get() with defaults
@@ -122,9 +131,11 @@ food_name = result.food_name  # Fails if LLM didn't generate field
 ```
 
 ### Finding 5: Tool Design for ReAct
-**Source**: https://dspy.ai/api/modules/ReAct/
+
+**Source**: <https://dspy.ai/api/modules/ReAct/>
 
 **NOT NEEDED FOR THIS PROJECT**. The V1 design attempted to use ReAct with tools, but:
+
 - OpenFoodFacts is not a "tool" - it's a data source
 - SearXNG is not a "tool" - it's a retrieval system
 - ReAct is for *agent decision-making* with tools
@@ -205,6 +216,7 @@ class SafePortionExtractor(dspy.Module):
 ```
 
 Then activate:
+
 ```python
 # In CalorieQualityProgram.__init__()
 self.portion_extractor = SafePortionExtractor()
@@ -218,6 +230,7 @@ self.portion_extractor.activate_assertions()  # CRITICAL
 **Purpose**: V1 returns empty data because API calls are mocked
 
 **Problem in V1**:
+
 ```python
 # agents.py line 188-202
 def _query_openfoodfacts(self, food_name: str, portion: str):
@@ -308,6 +321,7 @@ def _query_searxng(self, food_name: str, num_results: int = 3) -> list:
 ```
 
 **Why This Fixes the Problem**:
+
 - V1: No data retrieval → all nutrition fields None
 - V2: Real API calls → actual nutrition data returned
 - Fallback: If APIs fail, Domain KB provides estimates
@@ -475,6 +489,7 @@ if all_sources_empty:
 ### PITFALL 11: LLM Non-Determinism at Temperature > 0
 
 **What Goes Wrong**:
+
 ```
 Run 1: food_name="rohu fish", portion="60 gram"
 Run 2: food_name=None, portion=None  ← RANDOM FAILURE
@@ -482,6 +497,7 @@ Run 3: food_name="rohu", portion="60 gram piece"
 ```
 
 **Why It Occurs**:
+
 - temperature=0.3 introduces randomness
 - LLM occasionally "forgets" to generate required fields
 - No validation catches this until runtime crash
@@ -489,6 +505,7 @@ Run 3: food_name="rohu", portion="60 gram piece"
 **How to Fix**:
 
 1. **Set temperature=0.0 for extraction tasks**
+
 ```python
 # For extraction/routing modules
 llm_extraction = dspy.LM('ollama/qwen3:8b', temperature=0.0)
@@ -500,6 +517,7 @@ llm_reasoning = dspy.LM('ollama/qwen3:8b', temperature=0.5)
 2. **Add assertions** (see Phase 0.3)
 
 3. **Use .get() with defaults**
+
 ```python
 # ❌ UNSAFE
 food_name = result.food_name
@@ -509,6 +527,7 @@ food_name = result.get('food_name', 'unknown_food')
 ```
 
 **How to Test**:
+
 ```bash
 # Run 10 times, must get same output
 for i in {1..10}; do
@@ -522,6 +541,7 @@ done
 ### PITFALL 12: API Rate Limiting & Timeouts
 
 **What Goes Wrong**:
+
 ```
 OpenFoodFacts API: 100 requests/minute limit
 After 100 foods: HTTP 429 "Too Many Requests"
@@ -529,6 +549,7 @@ System crashes instead of gracefully degrading
 ```
 
 **Why It Occurs**:
+
 - No rate limiting in V1
 - No retry logic with exponential backoff
 - No caching of API responses
@@ -536,6 +557,7 @@ System crashes instead of gracefully degrading
 **How to Fix**:
 
 1. **Add caching**
+
 ```python
 import functools
 from cachetools import TTLCache
@@ -555,6 +577,7 @@ def _query_openfoodfacts_cached(self, food_name: str) -> dict:
 ```
 
 2. **Add retry with exponential backoff**
+
 ```python
 import time
 
@@ -573,6 +596,7 @@ def _query_openfoodfacts_with_retry(self, food_name: str, max_retries=3):
 ```
 
 **How to Test**:
+
 ```python
 # Rapid-fire 150 requests
 foods = ["food_" + str(i) for i in range(150)]
@@ -586,6 +610,7 @@ for food in foods:
 ### PITFALL 13: Ambiguous Food Names (NEW)
 
 **What Goes Wrong**:
+
 ```
 Input: "2 mousumbi lemons"
 OpenFoodFacts search: Returns Mexican limes
@@ -597,6 +622,7 @@ Expected: Rose apple/jambu (25 cal)
 ```
 
 **Why It Occurs**:
+
 - Regional food names not in global databases
 - Spelling variations (mosambi vs mousumbi)
 - Multiple foods with similar names
@@ -604,6 +630,7 @@ Expected: Rose apple/jambu (25 cal)
 **How to Fix**:
 
 1. **Add regional food mapping**
+
 ```python
 class RegionalFoodMapper:
     REGIONAL_MAPPINGS = {
@@ -626,6 +653,7 @@ class RegionalFoodMapper:
 ```
 
 2. **Try multiple search terms**
+
 ```python
 def _query_openfoodfacts(self, food_name: str):
     mapper = RegionalFoodMapper()
@@ -640,6 +668,7 @@ def _query_openfoodfacts(self, food_name: str):
 ```
 
 **How to Test**:
+
 ```python
 test_cases = [
     ("mousumbi lemons", "mosambi"),
@@ -657,6 +686,7 @@ for input_name, expected_match in test_cases:
 ### PITFALL 14: Portion Size Ambiguity
 
 **What Goes Wrong**:
+
 ```
 Input: "1 plate pav bhaji"
 System estimates: 300g
@@ -670,6 +700,7 @@ Calorie error: 70% over!
 ```
 
 **Why It Occurs**:
+
 - "Plate" varies: 200g (small) to 500g (restaurant)
 - "1 banana" varies: 60g (small) to 150g (large)
 - No user confirmation of portion estimate
@@ -677,6 +708,7 @@ Calorie error: 70% over!
 **How to Fix**:
 
 1. **Return portion range, not single value**
+
 ```python
 class PortionScaling(dspy.Signature):
     nutrition_per_100g = dspy.InputField(desc="Per 100g values")
@@ -695,6 +727,7 @@ class PortionScaling(dspy.Signature):
 ```
 
 2. **Ask user for confirmation (interactive mode)**
+
 ```python
 print(f"\nEstimated portion size: {typical_grams}g (range: {min_g}-{max_g}g)")
 user_input = input("Is this correct? (y/n or enter actual grams): ")
@@ -707,6 +740,7 @@ if user_input.lower() == 'n' or user_input.isdigit():
 ```
 
 **How to Test**:
+
 ```python
 test_cases = [
     ("1 plate pav bhaji", 200, 300, 500),  # min, typical, max
@@ -725,6 +759,7 @@ for portion, min_exp, typ_exp, max_exp in test_cases:
 ### PITFALL 15: Medical Condition Overfitting
 
 **What Goes Wrong**:
+
 ```
 Input condition: "I have non alcoholic fatty liver, I am skinny fat,
                   I am an active sedentary person with regular gym but
@@ -736,6 +771,7 @@ Expected: Should flag both liver stress AND cardio limitations
 ```
 
 **Why It Occurs**:
+
 - Complex medical descriptions get summarized
 - LLM picks "most prominent" condition
 - Misses interconnected health factors
@@ -743,6 +779,7 @@ Expected: Should flag both liver stress AND cardio limitations
 **How to Fix**:
 
 1. **Parse complex conditions into structured format**
+
 ```python
 class MedicalConditionParser(dspy.Signature):
     """Parse complex medical description into structured conditions."""
@@ -762,6 +799,7 @@ class MedicalConditionParser(dspy.Signature):
 ```
 
 2. **Multi-condition medical adapter**
+
 ```python
 def forward(self, nutrition_data, medical_description, food_name):
     # Parse complex description
@@ -787,6 +825,7 @@ def forward(self, nutrition_data, medical_description, food_name):
 ```
 
 **How to Test**:
+
 ```python
 complex_condition = """
 I have non alcoholic fatty liver, I am skinny fat,
@@ -811,6 +850,7 @@ assert any(word in result['warnings'].lower()
 ## V2 IMPLEMENTATION CHECKLIST
 
 ### Phase 0: Critical Fixes (DO THIS FIRST)
+
 - [ ] Change temperature to 0.0 in test_pot.py
 - [ ] Fix module calling: `.forward()` → `()`
 - [ ] Add SafePortionExtractor with assertions
@@ -818,6 +858,7 @@ assert any(word in result['warnings'].lower()
 - [ ] Test: Run 10 times, verify deterministic output
 
 ### Phase 1: Real API Integration
+
 - [ ] Implement real OpenFoodFacts HTTP calls
 - [ ] Implement real SearXNG integration
 - [ ] Add caching with TTLCache
@@ -825,26 +866,31 @@ assert any(word in result['warnings'].lower()
 - [ ] Test: Query 50 foods, verify data returned
 
 ### Phase 2: Expand Domain KB
+
 - [ ] Add 40+ Indian foods to domain KB
 - [ ] Add regional food name mapping
 - [ ] Test: All test foods from user's example covered
 
 ### Phase 3: LLM-Based Fallback
+
 - [ ] Create NutritionEstimator signature
 - [ ] Integrate into MedicalNutritionAgent
 - [ ] Test: Unknown food returns estimated data
 
 ### Phase 4: Portion Range Estimation
+
 - [ ] Modify PortionScaling to return min/typical/max
 - [ ] Add user confirmation in interactive mode
 - [ ] Test: Portion estimates within 20% of actual
 
 ### Phase 5: Medical Condition Parsing
+
 - [ ] Create MedicalConditionParser
 - [ ] Update MedicalAdapterAgent for multi-condition
 - [ ] Test: Complex conditions addressed fully
 
 ### Phase 6: End-to-End Validation
+
 - [ ] Run full test_pot.py with real user input
 - [ ] Verify: No None values in output
 - [ ] Verify: Total calories reasonable (1000-2000 for meal)
@@ -857,12 +903,14 @@ assert any(word in result['warnings'].lower()
 Your implementation is PRODUCTION READY when:
 
 1. **No None Values**
+
    ```bash
    python test_pot.py
    # Check output: ZERO instances of "None" in nutrition data
    ```
 
 2. **Realistic Calorie Totals**
+
    ```
    User meal with rice + fish + vegetables + fruits
    Expected total: 1200-1800 calories
@@ -870,18 +918,21 @@ Your implementation is PRODUCTION READY when:
    ```
 
 3. **Deterministic Extraction**
+
    ```bash
    for i in {1..10}; do python test_pot.py | grep "Food name"; done
    # All 10 runs: same food names extracted
    ```
 
 4. **API Integration Working**
+
    ```bash
    python test_pot.py 2>&1 | grep "OpenFoodFacts"
    # Should show successful API calls, not "Mock implementation"
    ```
 
 5. **Medical Warnings Specific**
+
    ```
    NAFLD patient eating rice (high carbs)
    Expected: Warning about carbs + liver fat
@@ -893,12 +944,14 @@ Your implementation is PRODUCTION READY when:
 ## REFERENCE: WHERE TO FIND ANSWERS (V2)
 
 ### For DSPy Best Practices
-- **Module calling**: https://dspy.ai/api/modules/Module/
-- **Assertions**: https://dspy.ai/learn/programming/7-assertions/
-- **Temperature strategy**: https://dspy.ai/cheatsheet/
-- **Prediction access**: https://dspy.ai/api/primitives/Prediction/
+
+- **Module calling**: <https://dspy.ai/api/modules/Module/>
+- **Assertions**: <https://dspy.ai/learn/programming/7-assertions/>
+- **Temperature strategy**: <https://dspy.ai/cheatsheet/>
+- **Prediction access**: <https://dspy.ai/api/primitives/Prediction/>
 
 ### For V1 Code to Modify
+
 - **PortionExtractor**: test_pot.py lines 48-52
 - **Module calling bug**: test_pot.py line 133
 - **Temperature setting**: test_pot.py line 242
@@ -906,6 +959,7 @@ Your implementation is PRODUCTION READY when:
 - **Domain KB**: translators.py lines 189-253
 
 ### For Pitfall Solutions
+
 - **Pitfall 11 (Non-determinism)**: V2 Phase 0
 - **Pitfall 12 (Rate limiting)**: V2 Phase 1
 - **Pitfall 13 (Ambiguous names)**: V2 Phase 2
@@ -929,6 +983,7 @@ Your implementation is PRODUCTION READY when:
 ---
 
 **V2 SUMMARY**: The V1 implementation had correct architecture but critical execution flaws. V2 fixes focus on:
+
 1. Real data retrieval (not mocks)
 2. Output validation (assertions)
 3. Correct DSPy patterns (module calling, temperature)

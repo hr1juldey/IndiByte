@@ -48,11 +48,71 @@ class OpenFoodFactsRequestTranslator:
 class OpenFoodFactsResponseTranslator:
     """Convert raw API response to standardized format"""
 
+    # Realistic bounds for nutrition per 100g (Fix #2: Data Validation)
+    REALISTIC_BOUNDS = {
+        "calories": (0, 900),        # kcal per 100g
+        "carbs_g": (0, 100),         # g per 100g
+        "protein_g": (0, 80),        # g per 100g
+        "fat_g": (0, 100),           # g per 100g
+        "fiber_g": (0, 30),          # g per 100g
+        "sodium_mg": (0, 2500),      # mg per 100g (hard cap)
+        "sugars_g": (0, 100),        # g per 100g
+    }
+
+    # Category-specific bounds to detect wrong product types
+    CATEGORY_BOUNDS = {
+        "vegetable": {"sodium_mg": (0, 100)},      # Fresh vegetables < 100mg
+        "fruit": {"sodium_mg": (0, 50)},           # Fresh fruits < 50mg
+        "grain": {"sodium_mg": (0, 500)},          # Grains can be higher
+        "egg": {"sodium_mg": (0, 300)},            # Eggs typically ~120mg
+        "fish": {"sodium_mg": (0, 300)},           # Fish typically ~50-100mg
+    }
+
+    def _detect_food_category(self, product_name: str) -> str:
+        """Detect food category from product name"""
+        name_lower = product_name.lower() if product_name else ""
+
+        if any(w in name_lower for w in ["cucumber", "tomato", "carrot", "spinach", "broccoli", "lettuce", "potato"]):
+            return "vegetable"
+        elif any(w in name_lower for w in ["apple", "banana", "orange", "grape", "watermelon", "fruit"]):
+            return "fruit"
+        elif any(w in name_lower for w in ["rice", "bread", "wheat", "grain", "oat"]):
+            return "grain"
+        elif any(w in name_lower for w in ["egg"]):
+            return "egg"
+        elif any(w in name_lower for w in ["fish", "salmon", "tuna", "rohu", "katla"]):
+            return "fish"
+        return ""
+
+    def _is_value_realistic(self, nutrient: str, value: float, product_name: str = "") -> bool:
+        """Check if nutrient value is realistic (Fix #2)"""
+        if value is None or value < 0:
+            return True  # None or negative = missing data
+
+        # Check global bounds
+        if nutrient in self.REALISTIC_BOUNDS:
+            min_val, max_val = self.REALISTIC_BOUNDS[nutrient]
+            if not (min_val <= value <= max_val):
+                print(f"      ⚠️  VALIDATION: {nutrient}={value} exceeds global bound ({min_val}-{max_val})")
+                return False
+
+        # Check category-specific bounds
+        category = self._detect_food_category(product_name)
+        if category and nutrient in self.CATEGORY_BOUNDS.get(category, {}):
+            min_val, max_val = self.CATEGORY_BOUNDS[category][nutrient]
+            if not (min_val <= value <= max_val):
+                print(f"      ⚠️  VALIDATION: {product_name} ({category}) {nutrient}={value} exceeds category bound ({min_val}-{max_val})")
+                return False
+
+        return True
+
     def translate(self, api_response: Dict) -> Dict:
         """
         Input: Raw OFF API response
-        Output: Standardized nutrition schema
+        Output: Standardized nutrition schema with validation (Fix #2)
         """
+        product_name = api_response.get("product_name", "")
+
         energy_kcal = api_response.get("energy_kcal_100g")
         if energy_kcal is None:
             # Handle case where energy is in kJ, so we need to convert to kcal
@@ -65,22 +125,37 @@ class OpenFoodFactsResponseTranslator:
             # If sodium is provided as a ratio (e.g., 0.01), convert to mg
             sodium_mg = sodium_mg * 1000
 
+        # Validate all values (Fix #2: Data Validation)
+        nutrition_data = {
+            "calories": energy_kcal,
+            "carbs_g": api_response.get("carbohydrates_100g"),
+            "protein_g": api_response.get("proteins_100g"),
+            "fat_g": api_response.get("fat_100g"),
+            "fiber_g": api_response.get("fiber_100g"),
+            "sodium_mg": sodium_mg,
+            "sugars_g": api_response.get("sugars_100g")
+        }
+
+        # Check each nutrient for realism
+        validation_failed = False
+        for nutrient, value in nutrition_data.items():
+            if not self._is_value_realistic(nutrient, value, product_name):
+                validation_failed = True
+                # Mark unrealistic values as None so they'll be inferred/replaced
+                nutrition_data[nutrient] = None
+
+        if validation_failed:
+            print(f"      ℹ️  Marked unrealistic values as None for KB fallback")
+
         return {
             "source": "OpenFoodFacts",
-            "product_name": api_response.get("product_name"),
-            "nutrition_per_100g": {
-                "calories": energy_kcal,
-                "carbs_g": api_response.get("carbohydrates_100g"),
-                "protein_g": api_response.get("proteins_100g"),
-                "fat_g": api_response.get("fat_100g"),
-                "fiber_g": api_response.get("fiber_100g"),
-                "sodium_mg": sodium_mg,
-                "sugars_g": api_response.get("sugars_100g")
-            },
+            "product_name": product_name,
+            "nutrition_per_100g": nutrition_data,
             "metadata": {
                 "completeness": self._calc_completeness(api_response),
                 "missing_fields": self._get_missing(api_response),
-                "reliability": 0.85  # Database source
+                "reliability": 0.85 if not validation_failed else 0.5,  # Lower reliability if validation failed
+                "validation_passed": not validation_failed
             }
         }
 
@@ -185,134 +260,85 @@ class DomainKnowledgeBaseTranslator:
     """Convert food name to standardized format using domain knowledge"""
 
     def __init__(self):
-        # Define typical nutritional values per 100g for common foods
-        # Expanded to include 40+ common Indian foods (V2 fix)
+        # CONSOLIDATED KB (Fix #3): Top 20 most common Indian foods
+        # Reduced from 58 foods / 108 lines to 20 foods / ~40 lines
+        # Regional aliases handled separately below
         self.food_knowledge_base = {
-            # === BEVERAGES ===
-            "tea": {
-                "calories": 1,
-                "carbs_g": 0.3,
-                "protein_g": 0,
-                "fat_g": 0,
-                "fiber_g": 0,
-                "sodium_mg": 2,
-                "sugars_g": 0.3
-            },
-            "black tea": {
-                "calories": 1,
-                "carbs_g": 0.3,
-                "protein_g": 0,
-                "fat_g": 0,
-                "fiber_g": 0,
-                "sodium_mg": 2,
-                "sugars_g": 0.3
-            },
-            "green tea": {
-                "calories": 1,
-                "carbs_g": 0.3,
-                "protein_g": 0,
-                "fat_g": 0,
-                "fiber_g": 0,
-                "sodium_mg": 2,
-                "sugars_g": 0.3
-            },
-            "coffee": {
-                "calories": 1,
-                "carbs_g": 0,
-                "protein_g": 0.1,
-                "fat_g": 0,
-                "fiber_g": 0,
-                "sodium_mg": 5,
-                "sugars_g": 0
-            },
-
-            # === INDIAN STAPLES ===
+            # === TOP 10 DAILY STAPLES (Tier 1 - Essential) ===
             "rice": {"calories": 130, "carbs_g": 28, "protein_g": 2.7, "fat_g": 0.3, "fiber_g": 0.4, "sodium_mg": 1, "sugars_g": 0.1},
-            "white rice": {"calories": 130, "carbs_g": 28, "protein_g": 2.7, "fat_g": 0.3, "fiber_g": 0.4, "sodium_mg": 1, "sugars_g": 0.1},
-            "brown rice": {"calories": 112, "carbs_g": 24, "protein_g": 2.6, "fat_g": 0.9, "fiber_g": 1.8, "sodium_mg": 5, "sugars_g": 0.4},
             "roti": {"calories": 71, "carbs_g": 15, "protein_g": 3, "fat_g": 0.4, "fiber_g": 2.7, "sodium_mg": 119, "sugars_g": 0.4},
-            "chapati": {"calories": 71, "carbs_g": 15, "protein_g": 3, "fat_g": 0.4, "fiber_g": 2.7, "sodium_mg": 119, "sugars_g": 0.4},
-            "naan": {"calories": 262, "carbs_g": 45, "protein_g": 9, "fat_g": 5, "fiber_g": 2, "sodium_mg": 419, "sugars_g": 3.5},
-            "paratha": {"calories": 290, "carbs_g": 36, "protein_g": 6, "fat_g": 13, "fiber_g": 2, "sodium_mg": 400, "sugars_g": 1.5},
-
-            # === FISH & SEAFOOD ===
-            "rohu fish": {"calories": 97, "carbs_g": 0, "protein_g": 19, "fat_g": 2, "fiber_g": 0, "sodium_mg": 55, "sugars_g": 0},
-            "rohu": {"calories": 97, "carbs_g": 0, "protein_g": 19, "fat_g": 2, "fiber_g": 0, "sodium_mg": 55, "sugars_g": 0},
-            "katla fish": {"calories": 96, "carbs_g": 0, "protein_g": 17.5, "fat_g": 2.7, "fiber_g": 0, "sodium_mg": 59, "sugars_g": 0},
-            "hilsa fish": {"calories": 310, "carbs_g": 0, "protein_g": 18, "fat_g": 25, "fiber_g": 0, "sodium_mg": 65, "sugars_g": 0},
-
-            # === EGGS ===
             "egg": {"calories": 155, "carbs_g": 1.1, "protein_g": 13, "fat_g": 11, "fiber_g": 0, "sodium_mg": 124, "sugars_g": 1.1},
-            "boiled egg": {"calories": 155, "carbs_g": 1.1, "protein_g": 13, "fat_g": 11, "fiber_g": 0, "sodium_mg": 124, "sugars_g": 1.1},
-            "chicken eggs": {"calories": 155, "carbs_g": 1.1, "protein_g": 13, "fat_g": 11, "fiber_g": 0, "sodium_mg": 124, "sugars_g": 1.1},
-            "fried egg": {"calories": 196, "carbs_g": 0.8, "protein_g": 13.6, "fat_g": 15, "fiber_g": 0, "sodium_mg": 207, "sugars_g": 0.4},
-
-            # === VEGETABLES ===
-            "cucumber": {"calories": 16, "carbs_g": 3.6, "protein_g": 0.7, "fat_g": 0.1, "fiber_g": 0.5, "sodium_mg": 2, "sugars_g": 1.7},
-            "cucumbers": {"calories": 16, "carbs_g": 3.6, "protein_g": 0.7, "fat_g": 0.1, "fiber_g": 0.5, "sodium_mg": 2, "sugars_g": 1.7},
-            "potato": {"calories": 77, "carbs_g": 17, "protein_g": 2, "fat_g": 0.1, "fiber_g": 2.2, "sodium_mg": 6, "sugars_g": 0.8},
-            "pumpkin": {"calories": 26, "carbs_g": 6.5, "protein_g": 1, "fat_g": 0.1, "fiber_g": 0.5, "sodium_mg": 1, "sugars_g": 2.8},
-            "alu posto": {"calories": 180, "carbs_g": 20, "protein_g": 5, "fat_g": 9, "fiber_g": 3, "sodium_mg": 350, "sugars_g": 2},
-
-            # === FRUITS ===
             "banana": {"calories": 89, "carbs_g": 23, "protein_g": 1.1, "fat_g": 0.3, "fiber_g": 2.6, "sodium_mg": 1, "sugars_g": 12},
-            "bananas": {"calories": 89, "carbs_g": 23, "protein_g": 1.1, "fat_g": 0.3, "fiber_g": 2.6, "sodium_mg": 1, "sugars_g": 12},
             "apple": {"calories": 52, "carbs_g": 14, "protein_g": 0.3, "fat_g": 0.2, "fiber_g": 2.4, "sodium_mg": 1, "sugars_g": 10},
-            "water apple": {"calories": 25, "carbs_g": 6, "protein_g": 0.6, "fat_g": 0.1, "fiber_g": 0.9, "sodium_mg": 7, "sugars_g": 4.5},
-            "watermelon": {"calories": 30, "carbs_g": 8, "protein_g": 0.6, "fat_g": 0.2, "fiber_g": 0.4, "sodium_mg": 1, "sugars_g": 6},
-            "mosambi": {"calories": 43, "carbs_g": 9, "protein_g": 0.7, "fat_g": 0.2, "fiber_g": 0.5, "sodium_mg": 2, "sugars_g": 8},
-            "mousumbi": {"calories": 43, "carbs_g": 9, "protein_g": 0.7, "fat_g": 0.2, "fiber_g": 0.5, "sodium_mg": 2, "sugars_g": 8},
-            "lemon": {"calories": 29, "carbs_g": 9, "protein_g": 1.1, "fat_g": 0.3, "fiber_g": 2.8, "sodium_mg": 2, "sugars_g": 2.5},
-
-            # === SNACKS ===
-            "chips": {"calories": 540, "carbs_g": 47, "protein_g": 6, "fat_g": 37, "fiber_g": 4, "sodium_mg": 850, "sugars_g": 0.5},
-            "potato chips": {"calories": 540, "carbs_g": 47, "protein_g": 6, "fat_g": 37, "fiber_g": 4, "sodium_mg": 850, "sugars_g": 0.5},
-
-            # === CURRIES ===
-            "pav bhaji": {"calories": 200, "carbs_g": 25, "protein_g": 4, "fat_g": 8, "fiber_g": 2, "sodium_mg": 400, "sugars_g": 3},
+            "cucumber": {"calories": 16, "carbs_g": 3.6, "protein_g": 0.7, "fat_g": 0.1, "fiber_g": 0.5, "sodium_mg": 2, "sugars_g": 1.7},
+            "potato": {"calories": 77, "carbs_g": 17, "protein_g": 2, "fat_g": 0.1, "fiber_g": 2.2, "sodium_mg": 6, "sugars_g": 0.8},
             "dal": {"calories": 116, "carbs_g": 20, "protein_g": 9, "fat_g": 0.4, "fiber_g": 8, "sodium_mg": 238, "sugars_g": 2},
-            "vegetable soup": {"calories": 67, "carbs_g": 12, "protein_g": 3.4, "fat_g": 0.7, "fiber_g": 3, "sodium_mg": 450, "sugars_g": 5},
-
-            # === ADDITIONAL INDIAN FOODS ===
+            "tea": {"calories": 1, "carbs_g": 0.3, "protein_g": 0, "fat_g": 0, "fiber_g": 0, "sodium_mg": 2, "sugars_g": 0.3},
             "paneer": {"calories": 291, "carbs_g": 3.6, "protein_g": 21.4, "fat_g": 22.2, "fiber_g": 0, "sodium_mg": 22, "sugars_g": 1.6},
+
+            # === TOP 10 COMMON INDIAN DISHES (Tier 2) ===
             "dosa": {"calories": 133, "carbs_g": 23.8, "protein_g": 5, "fat_g": 2.5, "fiber_g": 2.7, "sodium_mg": 8, "sugars_g": 0.8},
             "idli": {"calories": 39, "carbs_g": 8.1, "protein_g": 1.7, "fat_g": 0.2, "fiber_g": 1.2, "sodium_mg": 2, "sugars_g": 0.6},
-            "poha": {"calories": 110, "carbs_g": 23, "protein_g": 2.4, "fat_g": 1.5, "fiber_g": 1.3, "sodium_mg": 4, "sugars_g": 0.5},
-            "upma": {"calories": 96, "carbs_g": 20, "protein_g": 2.4, "fat_g": 0.7, "fiber_g": 1.3, "sodium_mg": 2, "sugars_g": 0.3},
-            "medu vada": {"calories": 152, "carbs_g": 23.6, "protein_g": 7.1, "fat_g": 3.6, "fiber_g": 2.2, "sodium_mg": 8, "sugars_g": 0.6},
-            "sambar": {"calories": 49, "carbs_g": 7.7, "protein_g": 2.5, "fat_g": 1.1, "fiber_g": 2.1, "sodium_mg": 653, "sugars_g": 2.1},
-            "raita": {"calories": 54, "carbs_g": 3.8, "protein_g": 3.4, "fat_g": 3.1, "fiber_g": 0.4, "sodium_mg": 227, "sugars_g": 3.8},
+            "pav bhaji": {"calories": 200, "carbs_g": 25, "protein_g": 4, "fat_g": 8, "fiber_g": 2, "sodium_mg": 400, "sugars_g": 3},
+            "samosa": {"calories": 262, "carbs_g": 24, "protein_g": 4, "fat_g": 17, "fiber_g": 2, "sodium_mg": 430, "sugars_g": 2},
             "curd": {"calories": 59, "carbs_g": 3.6, "protein_g": 3.8, "fat_g": 3.3, "fiber_g": 0, "sodium_mg": 36, "sugars_g": 3.6},
             "lassi": {"calories": 105, "carbs_g": 16.4, "protein_g": 3.8, "fat_g": 2.7, "fiber_g": 0, "sodium_mg": 46, "sugars_g": 15.8},
+            "naan": {"calories": 262, "carbs_g": 45, "protein_g": 9, "fat_g": 5, "fiber_g": 2, "sodium_mg": 419, "sugars_g": 3.5},
+            "vegetable soup": {"calories": 67, "carbs_g": 12, "protein_g": 3.4, "fat_g": 0.7, "fiber_g": 3, "sodium_mg": 450, "sugars_g": 5},
+            "rohu": {"calories": 97, "carbs_g": 0, "protein_g": 19, "fat_g": 2, "fiber_g": 0, "sodium_mg": 55, "sugars_g": 0},
             "buttermilk": {"calories": 48, "carbs_g": 5.2, "protein_g": 3.4, "fat_g": 1.9, "fiber_g": 0, "sodium_mg": 30, "sugars_g": 5.2},
-            "khichdi": {"calories": 107, "carbs_g": 19.7, "protein_g": 4.4, "fat_g": 1.4, "fiber_g": 2.3, "sodium_mg": 4, "sugars_g": 0.4},
-            "misal pav": {"calories": 200, "carbs_g": 25, "protein_g": 8, "fat_g": 6, "fiber_g": 5, "sodium_mg": 600, "sugars_g": 2},
-            "vada pav": {"calories": 250, "carbs_g": 35, "protein_g": 6, "fat_g": 9, "fiber_g": 2, "sodium_mg": 600, "sugars_g": 5},
-            "bhel puri": {"calories": 135, "carbs_g": 23, "protein_g": 3, "fat_g": 3, "fiber_g": 2, "sodium_mg": 550, "sugars_g": 4},
-            "pani puri": {"calories": 150, "carbs_g": 25, "protein_g": 2, "fat_g": 1, "fiber_g": 1, "sodium_mg": 600, "sugars_g": 2},
-            "samosa": {"calories": 262, "carbs_g": 24, "protein_g": 4, "fat_g": 17, "fiber_g": 2, "sodium_mg": 430, "sugars_g": 2},
-            "kachori": {"calories": 380, "carbs_g": 45, "protein_g": 8, "fat_g": 18, "fiber_g": 3, "sodium_mg": 700, "sugars_g": 3},
-            "jalebi": {"calories": 343, "carbs_g": 84.9, "protein_g": 2.7, "fat_g": 0.8, "fiber_g": 0, "sodium_mg": 11, "sugars_g": 67.4},
-            "gulab jamun": {"calories": 348, "carbs_g": 62.8, "protein_g": 6.9, "fat_g": 8.7, "fiber_g": 0, "sodium_mg": 94, "sugars_g": 50.6},
-            "rasgulla": {"calories": 148, "carbs_g": 32.6, "protein_g": 3.2, "fat_g": 0.6, "fiber_g": 0, "sodium_mg": 75, "sugars_g": 27.6}
+        }
+
+        # === REGIONAL ALIASES (Fix #3: Reduce KB, handle variations) ===
+        # These common variations map to the primary food in KB
+        self.aliases = {
+            # Staple variations
+            "white rice": "rice",
+            "brown rice": "rice",
+            "wheat": "roti",
+            "chapati": "roti",
+            "boiled egg": "egg",
+            "chicken eggs": "egg",
+            "fried egg": "egg",
+            "bananas": "banana",
+            "cucumbers": "cucumber",
+            "fish": "rohu",
+            "rohu fish": "rohu",
+            "katla": "rohu",
+            "mosambi": "apple",  # Similar citrus
+            "mousumbi": "apple",
+            "coffee": "tea",  # Similar hot beverage
+            "black tea": "tea",
+            "green tea": "tea",
         }
 
     def translate(self, food_name: str) -> Dict:
         """
         Input: Food name
-        Output: Standardized nutrition schema based on domain knowledge
+        Output: Standardized nutrition schema based on domain knowledge (with alias resolution - Fix #3)
         """
         food_lower = food_name.lower()
         nutrition = None
 
-        # Look for exact match first
-        nutrition = self.food_knowledge_base.get(food_lower)
+        # Step 1: Check if food is in aliases (Fix #3: Regional name handling)
+        if food_lower in self.aliases:
+            canonical_name = self.aliases[food_lower]
+            nutrition = self.food_knowledge_base.get(canonical_name)
+            if nutrition:
+                print(f"      ℹ️  KB Alias resolution: '{food_lower}' → '{canonical_name}'")
 
-        # If no exact match, look for partial matches
+        # Step 2: Look for exact match in KB
+        if nutrition is None:
+            nutrition = self.food_knowledge_base.get(food_lower)
+            if nutrition:
+                print(f"      ℹ️  KB Direct match found for '{food_lower}'")
+
+        # Step 3: Look for partial matches
         if nutrition is None:
             for key, value in self.food_knowledge_base.items():
                 if key in food_lower or food_lower in key:
                     nutrition = value
+                    print(f"      ℹ️  KB Partial match: '{food_lower}' matched with '{key}'")
                     break
 
         if nutrition is None:
